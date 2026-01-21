@@ -1,0 +1,93 @@
+<!-- Sidebar Navigation Component -->
+<div class="flex flex-col h-full">
+    <!-- Logo -->
+    <div class="p-4 border-b border-blue-800">
+        <a href="dashboard.html" class="flex items-center">
+            <img
+                src="https://www.middleton.school.nz/wp-content/uploads/2019/11/cropped-Middleton-Grange-Logo_1300px-768x211.png"
+                alt="Middleton Grange School"
+                class="h-10"
+            >
+        </a>
+        <p class="text-blue-300 text-xs mt-1">Content Management System</p>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="flex-1 overflow-y-auto py-4">
+        <ul class="space-y-1 px-3">
+            <li>
+                <a href="dashboard.html" class="nav-link flex items-center px-3 py-2 rounded-lg text-blue-100 hover:bg-blue-800 transition-colors" data-page="dashboard">
+                    <i data-feather="home" class="w-5 h-5 mr-3"></i>
+                    Dashboard
+                </a>
+            </li>
+            <li>
+                <a href="pages.html" class="nav-link flex items-center px-3 py-2 rounded-lg text-blue-100 hover:bg-blue-800 transition-colors" data-page="pages">
+                    <i data-feather="file-text" class="w-5 h-5 mr-3"></i>
+                    Pages
+                </a>
+            </li>
+            <li>
+                <a href="media-library.html" class="nav-link flex items-center px-3 py-2 rounded-lg text-blue-100 hover:bg-blue-800 transition-colors" data-page="media-library">
+                    <i data-feather="image" class="w-5 h-5 mr-3"></i>
+                    Media Library
+                </a>
+            </li>
+            <li>
+                <a href="menu-manager.html" class="nav-link flex items-center px-3 py-2 rounded-lg text-blue-100 hover:bg-blue-800 transition-colors" data-page="menu-manager">
+                    <i data-feather="menu" class="w-5 h-5 mr-3"></i>
+                    Menu Manager
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <li class="border-t border-blue-800 my-3"></li>
+
+            <!-- Content Types -->
+            <li class="px-3 py-1">
+                <span class="text-xs font-semibold text-blue-400 uppercase tracking-wider">Content</span>
+            </li>
+            <li>
+                <a href="pages.html?type=video-gallery" class="nav-link flex items-center px-3 py-2 rounded-lg text-blue-100 hover:bg-blue-800 transition-colors" data-page="videos">
+                    <i data-feather="video" class="w-5 h-5 mr-3"></i>
+                    Videos
+                </a>
+            </li>
+            <li>
+                <a href="pages.html?type=staff-listing" class="nav-link flex items-center px-3 py-2 rounded-lg text-blue-100 hover:bg-blue-800 transition-colors" data-page="staff">
+                    <i data-feather="users" class="w-5 h-5 mr-3"></i>
+                    Staff Profiles
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <li class="border-t border-blue-800 my-3"></li>
+
+            <!-- Settings Section -->
+            <li class="px-3 py-1">
+                <span class="text-xs font-semibold text-blue-400 uppercase tracking-wider">Settings</span>
+            </li>
+            <li>
+                <a href="settings.html" class="nav-link flex items-center px-3 py-2 rounded-lg text-blue-100 hover:bg-blue-800 transition-colors" data-page="settings">
+                    <i data-feather="settings" class="w-5 h-5 mr-3"></i>
+                    Site Settings
+                </a>
+            </li>
+            <li id="users-nav-item">
+                <a href="users.html" class="nav-link flex items-center px-3 py-2 rounded-lg text-blue-100 hover:bg-blue-800 transition-colors" data-page="users">
+                    <i data-feather="user-check" class="w-5 h-5 mr-3"></i>
+                    Users
+                    <span class="ml-auto px-2 py-0.5 text-xs bg-purple-500 text-white rounded-full">Admin</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Footer -->
+    <div class="p-4 border-t border-blue-800">
+        <a href="#" id="view-site-link" target="_blank" class="flex items-center px-3 py-2 rounded-lg text-blue-100 hover:bg-blue-800 transition-colors">
+            <i data-feather="external-link" class="w-5 h-5 mr-3"></i>
+            View Site
+        </a>
+    </div>
+</div>

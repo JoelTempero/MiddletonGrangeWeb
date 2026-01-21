@@ -1,0 +1,45 @@
+{
+  "name": "middleton-grange-cms",
+  "version": "1.0.0",
+  "description": "Custom CMS for Middleton Grange School website",
+  "main": "build/generate-site.js",
+  "scripts": {
+    "build": "node build/generate-site.js",
+    "build:dev": "node build/generate-site.js --dev",
+    "serve": "firebase serve",
+    "serve:admin": "firebase serve --only hosting:admin",
+    "serve:public": "firebase serve --only hosting:public",
+    "emulators": "firebase emulators:start",
+    "emulators:import": "firebase emulators:start --import=./emulator-data",
+    "emulators:export": "firebase emulators:export ./emulator-data",
+    "deploy": "npm run build && firebase deploy",
+    "deploy:admin": "firebase deploy --only hosting:admin",
+    "deploy:public": "npm run build && firebase deploy --only hosting:public",
+    "deploy:rules": "firebase deploy --only firestore:rules,storage:rules",
+    "lint": "eslint admin/js/**/*.js build/**/*.js",
+    "test": "echo \"No tests configured yet\""
+  },
+  "keywords": [
+    "cms",
+    "school",
+    "firebase",
+    "static-site-generator"
+  ],
+  "author": "Middleton Grange School",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "firebase-admin": "^12.0.0",
+    "handlebars": "^4.7.8",
+    "marked": "^11.1.0",
+    "sharp": "^0.33.2",
+    "slugify": "^1.6.6"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "firebase-tools": "^13.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

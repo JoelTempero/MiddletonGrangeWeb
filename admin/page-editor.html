@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Editor - Middleton Grange CMS</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://www.middleton.school.nz/wp-content/uploads/2019/11/cropped-Middleton-Grange-Logo_1300px-32x32.png">
+
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- Custom Admin Styles -->
+    <link rel="stylesheet" href="css/admin.css">
+
+    <!-- TipTap Editor Styles -->
+    <link rel="stylesheet" href="css/editor.css">
+
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+    <!-- Main Layout -->
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="w-64 bg-blue-900 text-white flex-shrink-0">
+            <!-- Sidebar content loaded from components/sidebar.html -->
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+
+            <!-- Header -->
+            <header id="header" class="bg-white shadow-sm">
+                <!-- Header content loaded from components/header.html -->
+            </header>
+
+            <!-- Page Content -->
+            <main class="flex-1 overflow-y-auto">
+                <!-- Editor Header -->
+                <div class="bg-white border-b border-gray-200 px-6 py-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <a href="pages.html" class="text-gray-500 hover:text-gray-700 mr-4">
+                                <i data-feather="arrow-left" class="w-5 h-5"></i>
+                            </a>
+                            <h1 class="text-xl font-bold text-gray-800" id="editor-title">New Page</h1>
+                            <span id="save-status" class="ml-4 text-sm text-gray-500"></span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <button id="preview-btn" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
+                                <i data-feather="eye" class="w-4 h-4 inline-block mr-1"></i>
+                                Preview
+                            </button>
+                            <button id="save-draft-btn" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
+                                Save Draft
+                            </button>
+                            <button id="publish-btn" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                                <i data-feather="check" class="w-4 h-4 inline-block mr-1"></i>
+                                Publish
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Editor Form -->
+                <div class="p-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                        <!-- Main Content Column -->
+                        <div class="lg:col-span-2 space-y-6">
+                            <!-- Title -->
+                            <div class="bg-white rounded-lg shadow p-6">
+                                <label for="page-title" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Page Title <span class="text-red-500">*</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    id="page-title"
+                                    placeholder="Enter page title..."
+                                    class="w-full px-4 py-3 text-xl border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                >
+                            </div>
+
+                            <!-- Header Image -->
+                            <div class="bg-white rounded-lg shadow p-6">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">
+                                    Header Image
+                                </label>
+                                <div id="header-image-container" class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors cursor-pointer">
+                                    <div id="header-image-placeholder">
+                                        <i data-feather="image" class="w-12 h-12 mx-auto text-gray-400 mb-2"></i>
+                                        <p class="text-gray-500">Click to select header image</p>
+                                        <p class="text-gray-400 text-sm">or drag and drop</p>
+                                    </div>
+                                    <div id="header-image-preview" class="hidden">
+                                        <img id="header-image-img" src="" alt="" class="max-h-48 mx-auto rounded-lg">
+                                        <button id="remove-header-image" class="mt-2 text-red-600 hover:text-red-800">
+                                            Remove image
+                                        </button>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="header-image-url">
+                                <div class="mt-3">
+                                    <label for="header-image-alt" class="block text-sm font-medium text-gray-700 mb-1">
+                                        Alt Text
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="header-image-alt"
+                                        placeholder="Describe the image for accessibility..."
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    >
+                                </div>
+                            </div>
+
+                            <!-- Rich Text Editor -->
+                            <div class="bg-white rounded-lg shadow">
+                                <div class="px-6 py-3 border-b border-gray-200">
+                                    <label class="block text-sm font-medium text-gray-700">
+                                        Page Content
+                                    </label>
+                                </div>
+                                <!-- Editor Toolbar -->
+                                <div id="editor-toolbar" class="px-4 py-2 border-b border-gray-200 flex flex-wrap gap-1">
+                                    <!-- Toolbar buttons will be added by editor.js -->
+                                </div>
+                                <!-- Editor Content -->
+                                <div id="editor" class="min-h-96 p-4">
+                                    <!-- TipTap editor will be initialized here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar Column -->
+                        <div class="space-y-6">
+                            <!-- Publish Settings -->
+                            <div class="bg-white rounded-lg shadow p-6">
+                                <h3 class="font-semibold text-gray-800 mb-4">Publish Settings</h3>
+
+                                <div class="space-y-4">
+                                    <!-- Status -->
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-600">Status</span>
+                                        <span id="publish-status" class="px-2 py-1 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800">
+                                            Draft
+                                        </span>
+                                    </div>
+
+                                    <!-- Published Toggle -->
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-600">Published</span>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" id="is-published" class="sr-only peer">
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                        </label>
+                                    </div>
+
+                                    <!-- Show in Menu -->
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-600">Show in Menu</span>
+                                        <label class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" id="show-in-menu" class="sr-only peer" checked>
+                                            <div class="w-11 h-6 bg-gray-200 peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Page Settings -->
+                            <div class="bg-white rounded-lg shadow p-6">
+                                <h3 class="font-semibold text-gray-800 mb-4">Page Settings</h3>
+
+                                <div class="space-y-4">
+                                    <!-- Slug -->
+                                    <div>
+                                        <label for="page-slug" class="block text-sm font-medium text-gray-700 mb-1">
+                                            URL Slug
+                                        </label>
+                                        <div class="flex">
+                                            <span class="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                                                /
+                                            </span>
+                                            <input
+                                                type="text"
+                                                id="page-slug"
+                                                placeholder="page-url"
+                                                class="flex-1 px-3 py-2 border border-gray-300 rounded-r-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            >
+                                        </div>
+                                    </div>
+
+                                    <!-- Page Type -->
+                                    <div>
+                                        <label for="page-type" class="block text-sm font-medium text-gray-700 mb-1">
+                                            Page Type
+                                        </label>
+                                        <select id="page-type" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                            <option value="standard">Standard Page</option>
+                                            <option value="video-gallery">Video Gallery</option>
+                                            <option value="staff-listing">Staff Listing</option>
+                                            <option value="news">News/Blog</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Menu Section -->
+                                    <div>
+                                        <label for="menu-section" class="block text-sm font-medium text-gray-700 mb-1">
+                                            Menu Section
+                                        </label>
+                                        <select id="menu-section" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                            <option value="">-- Select Section --</option>
+                                            <!-- Options loaded dynamically -->
+                                        </select>
+                                    </div>
+
+                                    <!-- Menu Order -->
+                                    <div>
+                                        <label for="menu-order" class="block text-sm font-medium text-gray-700 mb-1">
+                                            Menu Order
+                                        </label>
+                                        <input
+                                            type="number"
+                                            id="menu-order"
+                                            min="0"
+                                            value="0"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        >
+                                    </div>
+
+                                    <!-- Parent Page -->
+                                    <div>
+                                        <label for="parent-page" class="block text-sm font-medium text-gray-700 mb-1">
+                                            Parent Page
+                                        </label>
+                                        <select id="parent-page" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                            <option value="">-- No Parent --</option>
+                                            <!-- Options loaded dynamically -->
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- SEO Settings -->
+                            <div class="bg-white rounded-lg shadow p-6">
+                                <h3 class="font-semibold text-gray-800 mb-4">SEO Settings</h3>
+
+                                <div>
+                                    <label for="meta-description" class="block text-sm font-medium text-gray-700 mb-1">
+                                        Meta Description
+                                    </label>
+                                    <textarea
+                                        id="meta-description"
+                                        rows="3"
+                                        maxlength="160"
+                                        placeholder="Brief description for search engines (max 160 characters)..."
+                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                    ></textarea>
+                                    <p class="text-xs text-gray-500 mt-1">
+                                        <span id="meta-char-count">0</span>/160 characters
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Danger Zone -->
+                            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-red-500" id="danger-zone" style="display: none;">
+                                <h3 class="font-semibold text-red-800 mb-4">Danger Zone</h3>
+                                <button id="delete-page-btn" class="w-full px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors">
+                                    <i data-feather="trash-2" class="w-4 h-4 inline-block mr-1"></i>
+                                    Delete Page
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Media Picker Modal -->
+    <div id="media-picker-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-4xl mx-4 max-h-[90vh] flex flex-col">
+            <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                <h2 class="text-xl font-bold text-gray-800">Select Media</h2>
+                <button id="close-media-picker" class="text-gray-500 hover:text-gray-700">
+                    <i data-feather="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div class="flex-1 overflow-y-auto p-6">
+                <div id="media-picker-grid" class="grid grid-cols-4 gap-4">
+                    <!-- Media items loaded dynamically -->
+                </div>
+            </div>
+            <div class="px-6 py-4 border-t border-gray-200 flex justify-end gap-3">
+                <button id="cancel-media-picker" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
+                    Cancel
+                </button>
+                <button id="select-media" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700" disabled>
+                    Select
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage-compat.js"></script>
+
+    <!-- Firebase Configuration -->
+    <script src="js/firebase-config.js"></script>
+
+    <!-- TipTap Editor (ES Modules) -->
+    <script type="module" src="js/editor.js"></script>
+
+    <!-- Core Scripts -->
+    <script src="js/auth.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/page-editor.js"></script>
+
+    <!-- Initialize Feather Icons -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+        });
+    </script>
+</body>
+</html>

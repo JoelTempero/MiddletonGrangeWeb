@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Middleton Grange CMS</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://www.middleton.school.nz/wp-content/uploads/2019/11/cropped-Middleton-Grange-Logo_1300px-32x32.png">
+
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- Custom Admin Styles -->
+    <link rel="stylesheet" href="css/admin.css">
+
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+    <!-- Main Layout -->
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="w-64 bg-blue-900 text-white flex-shrink-0">
+            <!-- Sidebar content loaded from components/sidebar.html -->
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+
+            <!-- Header -->
+            <header id="header" class="bg-white shadow-sm">
+                <!-- Header content loaded from components/header.html -->
+            </header>
+
+            <!-- Page Content -->
+            <main class="flex-1 overflow-y-auto p-6">
+                <!-- Page Title -->
+                <div class="mb-6">
+                    <h1 class="text-2xl font-bold text-gray-800">Site Settings</h1>
+                    <p class="text-gray-600">Configure global website settings</p>
+                </div>
+
+                <!-- Settings Tabs -->
+                <div class="bg-white rounded-lg shadow">
+                    <!-- Tab Navigation -->
+                    <div class="border-b border-gray-200">
+                        <nav class="flex -mb-px overflow-x-auto">
+                            <button class="settings-tab active px-6 py-4 text-sm font-medium border-b-2 border-blue-600 text-blue-600" data-tab="general">
+                                General
+                            </button>
+                            <button class="settings-tab px-6 py-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="contact">
+                                Contact
+                            </button>
+                            <button class="settings-tab px-6 py-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="links">
+                                Social & Links
+                            </button>
+                            <button class="settings-tab px-6 py-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="homepage">
+                                Homepage
+                            </button>
+                            <button class="settings-tab px-6 py-4 text-sm font-medium border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="popup">
+                                Popup
+                            </button>
+                        </nav>
+                    </div>
+
+                    <!-- Tab Content -->
+                    <div class="p-6">
+                        <!-- General Tab -->
+                        <div id="tab-general" class="settings-content">
+                            <div class="max-w-2xl space-y-6">
+                                <div>
+                                    <label for="site-name" class="block text-sm font-medium text-gray-700 mb-1">Site Name</label>
+                                    <input type="text" id="site-name" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="Middleton Grange School">
+                                </div>
+
+                                <div>
+                                    <label for="tagline" class="block text-sm font-medium text-gray-700 mb-1">Tagline / Motto</label>
+                                    <input type="text" id="tagline" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="Character, Excellence, Service for the Glory of God">
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Logo</label>
+                                    <div class="flex items-center gap-4">
+                                        <div id="logo-preview" class="w-48 h-16 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                                            <img id="logo-img" src="" alt="Logo" class="max-h-full max-w-full hidden">
+                                            <span id="logo-placeholder" class="text-gray-400 text-sm">No logo uploaded</span>
+                                        </div>
+                                        <button id="upload-logo" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                                            Upload Logo
+                                        </button>
+                                    </div>
+                                    <input type="hidden" id="logo-url">
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Favicon</label>
+                                    <div class="flex items-center gap-4">
+                                        <div id="favicon-preview" class="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
+                                            <img id="favicon-img" src="" alt="Favicon" class="max-h-full max-w-full hidden">
+                                            <span id="favicon-placeholder" class="text-gray-400 text-xs">No icon</span>
+                                        </div>
+                                        <button id="upload-favicon" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                                            Upload Favicon
+                                        </button>
+                                    </div>
+                                    <input type="hidden" id="favicon-url">
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="primary-color" class="block text-sm font-medium text-gray-700 mb-1">Primary Color</label>
+                                        <div class="flex items-center gap-2">
+                                            <input type="color" id="primary-color" value="#1e3a5f" class="w-12 h-10 rounded border border-gray-300 cursor-pointer">
+                                            <input type="text" id="primary-color-hex" value="#1e3a5f" class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label for="secondary-color" class="block text-sm font-medium text-gray-700 mb-1">Secondary Color</label>
+                                        <div class="flex items-center gap-2">
+                                            <input type="color" id="secondary-color" value="#c9a227" class="w-12 h-10 rounded border border-gray-300 cursor-pointer">
+                                            <input type="text" id="secondary-color-hex" value="#c9a227" class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="footer-text" class="block text-sm font-medium text-gray-700 mb-1">Footer Copyright Text</label>
+                                    <input type="text" id="footer-text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" value="© Middleton Grange School. All rights reserved.">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Tab -->
+                        <div id="tab-contact" class="settings-content hidden">
+                            <div class="max-w-2xl space-y-6">
+                                <h3 class="text-lg font-medium text-gray-800 border-b pb-2">Main School</h3>
+
+                                <div>
+                                    <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                                    <input type="text" id="address" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                                        <input type="tel" id="phone" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                        <input type="email" id="email" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                </div>
+
+                                <h3 class="text-lg font-medium text-gray-800 border-b pb-2 pt-4">International College</h3>
+
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="int-phone" class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                                        <input type="tel" id="int-phone" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label for="int-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                        <input type="email" id="int-email" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label for="int-urgent" class="block text-sm font-medium text-gray-700 mb-1">Urgent / After Hours</label>
+                                    <input type="tel" id="int-urgent" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Social & Links Tab -->
+                        <div id="tab-links" class="settings-content hidden">
+                            <div class="max-w-2xl space-y-6">
+                                <div>
+                                    <label for="facebook-url" class="block text-sm font-medium text-gray-700 mb-1">Facebook URL</label>
+                                    <input type="url" id="facebook-url" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="https://www.facebook.com/...">
+                                </div>
+
+                                <div>
+                                    <label for="parent-portal-url" class="block text-sm font-medium text-gray-700 mb-1">Parent Portal URL</label>
+                                    <input type="url" id="parent-portal-url" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+
+                                <div>
+                                    <label for="student-portal-url" class="block text-sm font-medium text-gray-700 mb-1">Student Portal URL</label>
+                                    <input type="url" id="student-portal-url" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+
+                                <div>
+                                    <label for="kindo-url" class="block text-sm font-medium text-gray-700 mb-1">KINDO URL</label>
+                                    <input type="url" id="kindo-url" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+
+                                <div>
+                                    <label for="school-app-url" class="block text-sm font-medium text-gray-700 mb-1">School App URL</label>
+                                    <input type="url" id="school-app-url" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+
+                                <div>
+                                    <label for="theatre-url" class="block text-sm font-medium text-gray-700 mb-1">The Grange Theatre URL</label>
+                                    <input type="url" id="theatre-url" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Homepage Tab -->
+                        <div id="tab-homepage" class="settings-content hidden">
+                            <div class="max-w-2xl space-y-6">
+                                <h3 class="text-lg font-medium text-gray-800 border-b pb-2">Hero Section</h3>
+
+                                <div>
+                                    <label for="hero-video-url" class="block text-sm font-medium text-gray-700 mb-1">Hero Video URL</label>
+                                    <input type="url" id="hero-video-url" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+
+                                <div>
+                                    <label for="hero-title" class="block text-sm font-medium text-gray-700 mb-1">Hero Title</label>
+                                    <input type="text" id="hero-title" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+
+                                <div>
+                                    <label for="hero-subtitle" class="block text-sm font-medium text-gray-700 mb-1">Hero Subtitle</label>
+                                    <textarea id="hero-subtitle" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                                </div>
+
+                                <h3 class="text-lg font-medium text-gray-800 border-b pb-2 pt-4">Back to School Section</h3>
+
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="back-to-school-enabled" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                    <label for="back-to-school-enabled" class="ml-2 text-sm text-gray-700">Show Back to School section</label>
+                                </div>
+
+                                <div>
+                                    <label for="back-to-school-year" class="block text-sm font-medium text-gray-700 mb-1">Year</label>
+                                    <input type="text" id="back-to-school-year" class="w-32 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="2026">
+                                </div>
+
+                                <div id="back-to-school-links">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Download Links</label>
+                                    <!-- Links will be managed dynamically -->
+                                </div>
+
+                                <h3 class="text-lg font-medium text-gray-800 border-b pb-2 pt-4">Values Section</h3>
+
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="values-enabled" checked class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                    <label for="values-enabled" class="ml-2 text-sm text-gray-700">Show Character/Excellence/Service/Glory section</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Popup Tab -->
+                        <div id="tab-popup" class="settings-content hidden">
+                            <div class="max-w-2xl space-y-6">
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="popup-enabled" class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                    <label for="popup-enabled" class="ml-2 text-sm text-gray-700 font-medium">Enable Homepage Popup</label>
+                                </div>
+
+                                <div>
+                                    <label for="popup-title" class="block text-sm font-medium text-gray-700 mb-1">Popup Title</label>
+                                    <input type="text" id="popup-title" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Important Notice">
+                                </div>
+
+                                <div>
+                                    <label for="popup-content" class="block text-sm font-medium text-gray-700 mb-1">Popup Content</label>
+                                    <textarea id="popup-content" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Enter your announcement..."></textarea>
+                                </div>
+
+                                <div class="flex items-center">
+                                    <input type="checkbox" id="popup-show-once" checked class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                    <label for="popup-show-once" class="ml-2 text-sm text-gray-700">Show only once per session</label>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="popup-start" class="block text-sm font-medium text-gray-700 mb-1">Start Date (optional)</label>
+                                        <input type="date" id="popup-start" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                    <div>
+                                        <label for="popup-end" class="block text-sm font-medium text-gray-700 mb-1">End Date (optional)</label>
+                                        <input type="date" id="popup-end" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Save Button -->
+                        <div class="pt-6 border-t border-gray-200 mt-6">
+                            <button id="save-settings" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                Save Settings
+                            </button>
+                            <span id="settings-status" class="ml-4 text-sm text-gray-500"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage-compat.js"></script>
+
+    <!-- Firebase Configuration -->
+    <script src="js/firebase-config.js"></script>
+
+    <!-- Core Scripts -->
+    <script src="js/auth.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/settings.js"></script>
+
+    <!-- Initialize Feather Icons -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+        });
+    </script>
+</body>
+</html>
