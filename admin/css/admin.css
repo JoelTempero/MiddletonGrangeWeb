@@ -418,3 +418,17 @@ tbody tr:hover {
 .transition-slow {
     transition-duration: 500ms;
 }
+
+/* Rotation utility for expand/collapse icons */
+.rotate-90 {
+    transform: rotate(90deg);
+}
+
+.expand-toggle {
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Menu section expand animation */
+.section-pages {
+    transition: max-height 0.3s ease-in-out;
+}
