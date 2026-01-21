@@ -38,6 +38,10 @@ if (!isConfigured) {
     );
 }
 
+// Development mode detection
+const isDevelopment = window.location.hostname === 'localhost' ||
+                      window.location.hostname === '127.0.0.1';
+
 // Initialize Firebase
 let app, auth, db, storage;
 
@@ -47,22 +51,28 @@ try {
     db = firebase.firestore();
     storage = firebase.storage();
 
+    // Connect to emulators FIRST (before any other Firestore operations)
+    if (isDevelopment && isConfigured) {
+        auth.useEmulator('http://localhost:9099');
+        db.useEmulator('localhost', 8080);
+        storage.useEmulator('localhost', 9199);
+        console.log('%c🔧 Connected to Firebase emulators', 'color: #fcc419;');
+    } else {
+        // Only enable persistence in production (conflicts with emulators)
+        db.enablePersistence({ synchronizeTabs: true })
+            .catch((err) => {
+                if (err.code === 'failed-precondition') {
+                    console.warn('Firestore persistence failed: Multiple tabs open');
+                } else if (err.code === 'unimplemented') {
+                    console.warn('Firestore persistence not supported in this browser');
+                }
+            });
+    }
+
     // Set auth persistence to LOCAL (survives browser restart)
     auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
         .catch((error) => {
             console.warn('Auth persistence setting failed:', error);
-        });
-
-    // Enable Firestore offline persistence (optional but recommended)
-    db.enablePersistence({ synchronizeTabs: true })
-        .catch((err) => {
-            if (err.code === 'failed-precondition') {
-                // Multiple tabs open, persistence can only be enabled in one tab at a time
-                console.warn('Firestore persistence failed: Multiple tabs open');
-            } else if (err.code === 'unimplemented') {
-                // The current browser doesn't support persistence
-                console.warn('Firestore persistence not supported in this browser');
-            }
         });
 
     console.log('%c✓ Firebase initialized successfully', 'color: #51cf66; font-weight: bold;');
