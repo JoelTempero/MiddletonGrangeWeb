@@ -1,0 +1,172 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ============================================
+    // HELPER FUNCTIONS
+    // ============================================
+
+    // Check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Check if user is an admin
+    function isAdmin() {
+      return isAuthenticated() &&
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.active == true;
+    }
+
+    // Check if user is an editor (includes admins)
+    function isEditor() {
+      return isAuthenticated() &&
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['admin', 'editor'] &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.active == true;
+    }
+
+    // Validate timestamp is server time
+    function isValidTimestamp(field) {
+      return request.resource.data[field] == request.time;
+    }
+
+    // ============================================
+    // PAGES COLLECTION
+    // ============================================
+    match /pages/{pageId} {
+      // Anyone can read published pages (for static site generation)
+      allow read: if true;
+
+      // Only editors can create/update pages
+      allow create: if isEditor() &&
+        request.resource.data.keys().hasAll(['title', 'slug', 'status']);
+
+      allow update: if isEditor();
+
+      // Only admins can delete pages
+      allow delete: if isAdmin();
+    }
+
+    // ============================================
+    // MENU SECTIONS COLLECTION
+    // ============================================
+    match /menuSections/{sectionId} {
+      // Anyone can read menu structure
+      allow read: if true;
+
+      // Only editors can modify menu sections
+      allow create, update: if isEditor();
+
+      // Only admins can delete menu sections
+      allow delete: if isAdmin();
+    }
+
+    // ============================================
+    // SITE SETTINGS COLLECTION
+    // ============================================
+    match /siteSettings/{settingId} {
+      // Anyone can read settings (for static site generation)
+      allow read: if true;
+
+      // Only admins can modify site settings
+      allow write: if isAdmin();
+    }
+
+    // ============================================
+    // MEDIA COLLECTION
+    // ============================================
+    match /media/{mediaId} {
+      // Anyone can read media metadata
+      allow read: if true;
+
+      // Editors can upload and update media
+      allow create: if isEditor() &&
+        request.resource.data.keys().hasAll(['filename', 'url', 'type', 'createdAt']);
+
+      allow update: if isEditor();
+
+      // Only admins can delete media
+      allow delete: if isAdmin();
+    }
+
+    // ============================================
+    // USERS COLLECTION
+    // ============================================
+    match /users/{userId} {
+      // Users can read their own document, admins can read all
+      allow read: if isAuthenticated() &&
+        (request.auth.uid == userId || isAdmin());
+
+      // Only admins can create new users
+      allow create: if isAdmin();
+
+      // Users can update their own non-role fields, admins can update everything
+      allow update: if isAuthenticated() && (
+        (request.auth.uid == userId &&
+          !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'active'])) ||
+        isAdmin()
+      );
+
+      // Only admins can delete users
+      allow delete: if isAdmin();
+    }
+
+    // ============================================
+    // VIDEOS COLLECTION
+    // ============================================
+    match /videos/{videoId} {
+      // Anyone can read videos
+      allow read: if true;
+
+      // Editors can manage videos
+      allow create, update: if isEditor();
+
+      // Only admins can delete videos
+      allow delete: if isAdmin();
+    }
+
+    // ============================================
+    // STAFF PROFILES COLLECTION
+    // ============================================
+    match /staffProfiles/{profileId} {
+      // Anyone can read staff profiles
+      allow read: if true;
+
+      // Editors can manage staff profiles
+      allow create, update: if isEditor();
+
+      // Only admins can delete staff profiles
+      allow delete: if isAdmin();
+    }
+
+    // ============================================
+    // ALUMNI PROFILES COLLECTION
+    // ============================================
+    match /alumniProfiles/{profileId} {
+      // Anyone can read alumni profiles
+      allow read: if true;
+
+      // Editors can manage alumni profiles
+      allow create, update: if isEditor();
+
+      // Only admins can delete alumni profiles
+      allow delete: if isAdmin();
+    }
+
+    // ============================================
+    // ACTIVITY LOG COLLECTION (for dashboard)
+    // ============================================
+    match /activityLog/{logId} {
+      // Only authenticated users can read activity logs
+      allow read: if isAuthenticated();
+
+      // Only editors can create logs (automatically on actions)
+      allow create: if isEditor();
+
+      // Logs cannot be modified or deleted
+      allow update, delete: if false;
+    }
+  }
+}

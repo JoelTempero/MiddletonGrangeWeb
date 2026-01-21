@@ -1,0 +1,205 @@
+{{!-- Staff Listing Page Template --}}
+{{!-- Extends base.html --}}
+
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <h1>{{title}}</h1>
+        {{#if breadcrumbs}}
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <ol>
+                <li><a href="/">Home</a></li>
+                {{#each breadcrumbs}}
+                <li>
+                    {{#if url}}
+                    <a href="{{url}}">{{title}}</a>
+                    {{else}}
+                    <span aria-current="page">{{title}}</span>
+                    {{/if}}
+                </li>
+                {{/each}}
+            </ol>
+        </nav>
+        {{/if}}
+    </div>
+</section>
+
+<!-- Page Intro -->
+{{#if content}}
+<section class="page-intro">
+    <div class="container">
+        <div class="prose">
+            {{{content}}}
+        </div>
+    </div>
+</section>
+{{/if}}
+
+<!-- Department Filter -->
+{{#if departments}}
+<section class="staff-filters">
+    <div class="container">
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All Staff</button>
+            {{#each departments}}
+            <button class="filter-btn" data-filter="{{slug}}">{{name}}</button>
+            {{/each}}
+        </div>
+    </div>
+</section>
+{{/if}}
+
+<!-- Staff Grid -->
+<section class="staff-listing">
+    <div class="container">
+        {{#if staff}}
+        <div class="staff-grid" id="staff-grid">
+            {{#each staff}}
+            <div class="staff-card" data-department="{{department}}">
+                <div class="staff-photo">
+                    {{#if photo}}
+                    <img src="{{photo}}" alt="{{name}}" loading="lazy">
+                    {{else}}
+                    <div class="staff-placeholder">
+                        <i data-feather="user" class="icon-xl"></i>
+                    </div>
+                    {{/if}}
+                </div>
+                <div class="staff-info">
+                    <h3 class="staff-name">{{name}}</h3>
+                    <p class="staff-role">{{role}}</p>
+                    {{#if qualifications}}
+                    <p class="staff-qualifications">{{qualifications}}</p>
+                    {{/if}}
+                    {{#if email}}
+                    <a href="mailto:{{email}}" class="staff-email">
+                        <i data-feather="mail" class="icon-sm"></i>
+                        {{email}}
+                    </a>
+                    {{/if}}
+                </div>
+                {{#if bio}}
+                <button class="staff-bio-toggle" data-staff-id="{{id}}">
+                    View Profile
+                    <i data-feather="chevron-right" class="icon-sm"></i>
+                </button>
+                {{/if}}
+            </div>
+            {{/each}}
+        </div>
+        {{else}}
+        <div class="empty-state">
+            <i data-feather="users" class="icon-xl"></i>
+            <h3>No Staff Listed</h3>
+            <p>Staff profiles will be added soon.</p>
+        </div>
+        {{/if}}
+    </div>
+</section>
+
+<!-- Staff Profile Modal -->
+<div class="staff-modal" id="staff-modal">
+    <div class="staff-modal-content">
+        <button class="staff-modal-close" id="staff-modal-close" aria-label="Close">
+            <i data-feather="x"></i>
+        </button>
+        <div class="staff-modal-body">
+            <div class="staff-modal-header">
+                <div class="staff-modal-photo" id="modal-photo"></div>
+                <div class="staff-modal-info">
+                    <h2 id="modal-name"></h2>
+                    <p class="staff-role" id="modal-role"></p>
+                    <p class="staff-qualifications" id="modal-qualifications"></p>
+                </div>
+            </div>
+            <div class="staff-modal-bio" id="modal-bio"></div>
+            <div class="staff-modal-contact" id="modal-contact"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Staff Listing Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Staff filtering
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const staffCards = document.querySelectorAll('.staff-card');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filter = btn.dataset.filter;
+
+            staffCards.forEach(card => {
+                if (filter === 'all' || card.dataset.department === filter) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    // Staff profile modal
+    const modal = document.getElementById('staff-modal');
+    const modalClose = document.getElementById('staff-modal-close');
+
+    // Staff data embedded in page (populated by generator)
+    const staffData = {{{staff_data_json}}};
+
+    document.querySelectorAll('.staff-bio-toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const staffId = btn.dataset.staffId;
+            const staff = staffData.find(s => s.id === staffId);
+
+            if (!staff) return;
+
+            // Populate modal
+            document.getElementById('modal-name').textContent = staff.name;
+            document.getElementById('modal-role').textContent = staff.role;
+            document.getElementById('modal-qualifications').textContent = staff.qualifications || '';
+            document.getElementById('modal-bio').innerHTML = staff.bio || '';
+
+            // Photo
+            const photoEl = document.getElementById('modal-photo');
+            if (staff.photo) {
+                photoEl.innerHTML = `<img src="${staff.photo}" alt="${staff.name}">`;
+            } else {
+                photoEl.innerHTML = '<div class="staff-placeholder"><i data-feather="user"></i></div>';
+            }
+
+            // Contact
+            const contactEl = document.getElementById('modal-contact');
+            if (staff.email) {
+                contactEl.innerHTML = `
+                    <a href="mailto:${staff.email}" class="btn btn-secondary">
+                        <i data-feather="mail"></i>
+                        Email ${staff.name.split(' ')[0]}
+                    </a>
+                `;
+            } else {
+                contactEl.innerHTML = '';
+            }
+
+            feather.replace();
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    modalClose?.addEventListener('click', closeModal);
+    modal?.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+    });
+});
+</script>

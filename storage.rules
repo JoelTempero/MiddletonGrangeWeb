@@ -1,0 +1,98 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // ============================================
+    // MEDIA FILES
+    // ============================================
+    match /media/{allPaths=**} {
+      // Anyone can read media files (public images, PDFs, etc.)
+      allow read: if true;
+
+      // Only authenticated users can upload
+      allow write: if request.auth != null
+        // Limit file size to 10MB
+        && request.resource.size < 10 * 1024 * 1024
+        // Only allow specific file types
+        && request.resource.contentType.matches('image/.*|application/pdf|video/mp4');
+    }
+
+    // ============================================
+    // LOGO AND BRANDING ASSETS
+    // ============================================
+    match /branding/{fileName} {
+      // Anyone can read branding assets
+      allow read: if true;
+
+      // Only authenticated users can upload branding
+      allow write: if request.auth != null
+        && request.resource.size < 5 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
+
+    // ============================================
+    // STAFF PHOTOS
+    // ============================================
+    match /staff/{fileName} {
+      // Anyone can read staff photos
+      allow read: if true;
+
+      // Only authenticated users can upload staff photos
+      allow write: if request.auth != null
+        && request.resource.size < 5 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
+
+    // ============================================
+    // ALUMNI PHOTOS
+    // ============================================
+    match /alumni/{fileName} {
+      // Anyone can read alumni photos
+      allow read: if true;
+
+      // Only authenticated users can upload alumni photos
+      allow write: if request.auth != null
+        && request.resource.size < 5 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
+
+    // ============================================
+    // PAGE HEADER IMAGES
+    // ============================================
+    match /headers/{fileName} {
+      // Anyone can read header images
+      allow read: if true;
+
+      // Only authenticated users can upload headers
+      allow write: if request.auth != null
+        && request.resource.size < 10 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
+
+    // ============================================
+    // VIDEO FILES
+    // ============================================
+    match /videos/{fileName} {
+      // Anyone can read videos
+      allow read: if true;
+
+      // Only authenticated users can upload videos (larger limit)
+      allow write: if request.auth != null
+        && request.resource.size < 100 * 1024 * 1024
+        && request.resource.contentType.matches('video/.*');
+    }
+
+    // ============================================
+    // THUMBNAILS (auto-generated)
+    // ============================================
+    match /thumbnails/{fileName} {
+      // Anyone can read thumbnails
+      allow read: if true;
+
+      // Only system/authenticated users can create thumbnails
+      allow write: if request.auth != null
+        && request.resource.size < 1 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+    }
+  }
+}

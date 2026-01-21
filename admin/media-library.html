@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Library - Middleton Grange CMS</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://www.middleton.school.nz/wp-content/uploads/2019/11/cropped-Middleton-Grange-Logo_1300px-32x32.png">
+
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- Custom Admin Styles -->
+    <link rel="stylesheet" href="css/admin.css">
+
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+    <!-- Main Layout -->
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="w-64 bg-blue-900 text-white flex-shrink-0">
+            <!-- Sidebar content loaded from components/sidebar.html -->
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+
+            <!-- Header -->
+            <header id="header" class="bg-white shadow-sm">
+                <!-- Header content loaded from components/header.html -->
+            </header>
+
+            <!-- Page Content -->
+            <main class="flex-1 overflow-y-auto p-6">
+                <!-- Page Title & Actions -->
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800">Media Library</h1>
+                        <p class="text-gray-600">Manage images, documents, and video files</p>
+                    </div>
+                    <button id="upload-btn" class="mt-4 sm:mt-0 inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                        <i data-feather="upload" class="w-5 h-5 mr-2"></i>
+                        Upload Files
+                    </button>
+                </div>
+
+                <!-- Upload Dropzone -->
+                <div id="upload-dropzone" class="hidden bg-white rounded-lg shadow border-2 border-dashed border-blue-400 p-8 mb-6">
+                    <div class="text-center">
+                        <i data-feather="upload-cloud" class="w-12 h-12 mx-auto text-blue-500 mb-4"></i>
+                        <p class="text-lg font-medium text-gray-700">Drop files here to upload</p>
+                        <p class="text-gray-500 mt-1">or click to browse</p>
+                        <input type="file" id="file-input" multiple accept="image/*,.pdf,video/mp4" class="hidden">
+                        <button id="browse-files" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            Browse Files
+                        </button>
+                        <p class="text-xs text-gray-400 mt-4">Max file size: 10MB. Supported: JPG, PNG, GIF, WebP, PDF, MP4</p>
+                    </div>
+                </div>
+
+                <!-- Upload Progress -->
+                <div id="upload-progress" class="hidden bg-white rounded-lg shadow p-4 mb-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-medium text-gray-700">Uploading files...</span>
+                        <span id="upload-percent" class="text-sm text-gray-500">0%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div id="upload-bar" class="bg-blue-600 h-2 rounded-full transition-all" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- Filters & Search -->
+                <div class="bg-white rounded-lg shadow mb-6">
+                    <div class="p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                        <!-- Search -->
+                        <div class="relative flex-1 max-w-md">
+                            <i data-feather="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"></i>
+                            <input
+                                type="text"
+                                id="search-media"
+                                placeholder="Search files..."
+                                class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            >
+                        </div>
+
+                        <!-- Filters -->
+                        <div class="flex gap-3">
+                            <select id="filter-type" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <option value="">All Types</option>
+                                <option value="image">Images</option>
+                                <option value="pdf">PDFs</option>
+                                <option value="video">Videos</option>
+                            </select>
+
+                            <select id="sort-by" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <option value="date-desc">Newest First</option>
+                                <option value="date-asc">Oldest First</option>
+                                <option value="name-asc">Name A-Z</option>
+                                <option value="name-desc">Name Z-A</option>
+                                <option value="size-desc">Largest First</option>
+                                <option value="size-asc">Smallest First</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bulk Actions -->
+                <div id="bulk-actions" class="hidden bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                    <div class="flex items-center justify-between">
+                        <span class="text-blue-800">
+                            <span id="selected-count">0</span> files selected
+                        </span>
+                        <button id="bulk-delete" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                            Delete Selected
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Media Grid -->
+                <div id="media-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                    <!-- Media items will be loaded here -->
+                    <div class="col-span-full text-center py-12 text-gray-500">
+                        <i data-feather="loader" class="w-8 h-8 animate-spin mx-auto mb-2"></i>
+                        <p>Loading media...</p>
+                    </div>
+                </div>
+
+                <!-- Load More -->
+                <div id="load-more-container" class="hidden text-center mt-6">
+                    <button id="load-more" class="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
+                        Load More
+                    </button>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Media Details Modal -->
+    <div id="media-details-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] flex flex-col">
+            <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
+                <h2 class="text-xl font-bold text-gray-800">Media Details</h2>
+                <button id="close-details" class="text-gray-500 hover:text-gray-700">
+                    <i data-feather="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div class="flex-1 overflow-y-auto p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Preview -->
+                    <div>
+                        <div id="media-preview" class="bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center min-h-48">
+                            <!-- Preview loaded dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Details -->
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500">Filename</label>
+                            <p id="media-filename" class="text-gray-800 font-medium"></p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500">Type</label>
+                            <p id="media-type" class="text-gray-800"></p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500">Size</label>
+                            <p id="media-size" class="text-gray-800"></p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500">Dimensions</label>
+                            <p id="media-dimensions" class="text-gray-800"></p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500">Uploaded</label>
+                            <p id="media-uploaded" class="text-gray-800"></p>
+                        </div>
+                        <div>
+                            <label for="media-alt" class="block text-sm font-medium text-gray-500">Alt Text</label>
+                            <input
+                                type="text"
+                                id="media-alt"
+                                placeholder="Describe the image..."
+                                class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            >
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-500">URL</label>
+                            <div class="flex mt-1">
+                                <input
+                                    type="text"
+                                    id="media-url"
+                                    readonly
+                                    class="flex-1 px-3 py-2 border border-gray-300 rounded-l-lg bg-gray-50 text-sm"
+                                >
+                                <button id="copy-url" class="px-4 py-2 bg-blue-600 text-white rounded-r-lg hover:bg-blue-700 transition-colors">
+                                    Copy
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="px-6 py-4 border-t border-gray-200 flex justify-between">
+                <button id="delete-media" class="px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors">
+                    <i data-feather="trash-2" class="w-4 h-4 inline-block mr-1"></i>
+                    Delete
+                </button>
+                <button id="save-media-details" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                    Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage-compat.js"></script>
+
+    <!-- Firebase Configuration -->
+    <script src="js/firebase-config.js"></script>
+
+    <!-- Core Scripts -->
+    <script src="js/auth.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/media.js"></script>
+
+    <!-- Initialize Feather Icons -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+        });
+    </script>
+</body>
+</html>

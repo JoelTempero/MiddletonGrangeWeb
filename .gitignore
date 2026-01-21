@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+storage-debug.log
+
+# Emulator data (optional - uncomment to include)
+emulator-data/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build output (generated public site)
+# Uncomment if you want to exclude generated files
+# public/*.html
+# public/images/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Firebase service account key (NEVER commit this!)
+*-firebase-adminsdk-*.json
+serviceAccountKey.json

@@ -1,0 +1,65 @@
+<!-- Header Component -->
+<div class="flex items-center justify-between px-6 py-4">
+    <!-- Left: Mobile menu toggle & Breadcrumb -->
+    <div class="flex items-center">
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-menu-toggle" class="lg:hidden mr-4 text-gray-500 hover:text-gray-700">
+            <i data-feather="menu" class="w-6 h-6"></i>
+        </button>
+
+        <!-- Breadcrumb (optional) -->
+        <nav id="breadcrumb" class="hidden sm:flex items-center text-sm text-gray-500">
+            <a href="dashboard.html" class="hover:text-gray-700">Dashboard</a>
+            <span class="mx-2">/</span>
+            <span id="current-page-name" class="text-gray-700 font-medium">Dashboard</span>
+        </nav>
+    </div>
+
+    <!-- Right: User Menu & Actions -->
+    <div class="flex items-center space-x-4">
+        <!-- Quick Create Button -->
+        <a href="page-editor.html" class="hidden sm:flex items-center px-3 py-1.5 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-colors">
+            <i data-feather="plus" class="w-4 h-4 mr-1"></i>
+            New Page
+        </a>
+
+        <!-- Notifications (future feature) -->
+        <button id="notifications-btn" class="relative text-gray-500 hover:text-gray-700">
+            <i data-feather="bell" class="w-5 h-5"></i>
+            <!-- Notification badge (hidden by default) -->
+            <span id="notification-badge" class="hidden absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">0</span>
+        </button>
+
+        <!-- User Dropdown -->
+        <div class="relative" id="user-dropdown-container">
+            <button id="user-menu-btn" class="flex items-center space-x-2 text-gray-700 hover:text-gray-900">
+                <div class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-medium">
+                    <span id="user-initials">--</span>
+                </div>
+                <span id="user-display-name" class="hidden sm:inline-block text-sm font-medium">Loading...</span>
+                <i data-feather="chevron-down" class="w-4 h-4"></i>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
+                <div class="px-4 py-2 border-b border-gray-100">
+                    <p id="user-email" class="text-sm text-gray-500 truncate">user@example.com</p>
+                    <p id="user-role-badge" class="text-xs mt-1">
+                        <span class="px-2 py-0.5 bg-blue-100 text-blue-800 rounded-full">Editor</span>
+                    </p>
+                </div>
+                <a href="settings.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                    <i data-feather="settings" class="w-4 h-4 inline-block mr-2"></i>
+                    Settings
+                </a>
+                <button id="logout-btn" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100">
+                    <i data-feather="log-out" class="w-4 h-4 inline-block mr-2"></i>
+                    Sign Out
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Mobile Sidebar Overlay -->
+<div id="mobile-overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"></div>

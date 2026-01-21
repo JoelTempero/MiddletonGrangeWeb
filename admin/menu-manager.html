@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Manager - Middleton Grange CMS</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://www.middleton.school.nz/wp-content/uploads/2019/11/cropped-Middleton-Grange-Logo_1300px-32x32.png">
+
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- Custom Admin Styles -->
+    <link rel="stylesheet" href="css/admin.css">
+
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <!-- SortableJS for drag-and-drop -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+    <!-- Main Layout -->
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="w-64 bg-blue-900 text-white flex-shrink-0">
+            <!-- Sidebar content loaded from components/sidebar.html -->
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+
+            <!-- Header -->
+            <header id="header" class="bg-white shadow-sm">
+                <!-- Header content loaded from components/header.html -->
+            </header>
+
+            <!-- Page Content -->
+            <main class="flex-1 overflow-y-auto p-6">
+                <!-- Page Title & Actions -->
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800">Menu Manager</h1>
+                        <p class="text-gray-600">Organize navigation sections and page order</p>
+                    </div>
+                    <button id="add-section-btn" class="mt-4 sm:mt-0 inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                        <i data-feather="plus" class="w-5 h-5 mr-2"></i>
+                        Add Section
+                    </button>
+                </div>
+
+                <!-- Instructions -->
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                    <div class="flex items-start">
+                        <i data-feather="info" class="w-5 h-5 text-blue-600 mr-3 mt-0.5"></i>
+                        <div class="text-blue-800">
+                            <p class="font-medium">How to use the Menu Manager</p>
+                            <ul class="text-sm mt-1 list-disc list-inside">
+                                <li>Drag sections to reorder them in the main navigation</li>
+                                <li>Click on a section to expand and see its pages</li>
+                                <li>Drag pages within a section to reorder them</li>
+                                <li>Changes are saved automatically</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu Sections Container -->
+                <div id="menu-sections" class="space-y-4">
+                    <!-- Loading state -->
+                    <div class="bg-white rounded-lg shadow p-8 text-center text-gray-500">
+                        <i data-feather="loader" class="w-8 h-8 animate-spin mx-auto mb-2"></i>
+                        <p>Loading menu structure...</p>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Add/Edit Section Modal -->
+    <div id="section-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl p-6 max-w-md w-full mx-4">
+            <h2 id="section-modal-title" class="text-xl font-bold text-gray-800 mb-4">Add Menu Section</h2>
+
+            <form id="section-form" class="space-y-4">
+                <div>
+                    <label for="section-title" class="block text-sm font-medium text-gray-700 mb-1">
+                        Section Title <span class="text-red-500">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        id="section-title"
+                        required
+                        placeholder="e.g., About MGS"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    >
+                </div>
+
+                <div>
+                    <label for="section-id" class="block text-sm font-medium text-gray-700 mb-1">
+                        Section ID <span class="text-red-500">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        id="section-id"
+                        required
+                        placeholder="e.g., about-mgs"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    >
+                    <p class="text-xs text-gray-500 mt-1">Lowercase, no spaces. Used internally.</p>
+                </div>
+
+                <div>
+                    <label for="section-description" class="block text-sm font-medium text-gray-700 mb-1">
+                        Description
+                    </label>
+                    <input
+                        type="text"
+                        id="section-description"
+                        placeholder="Brief description for mega menu"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    >
+                </div>
+
+                <div class="flex items-center">
+                    <input type="checkbox" id="section-visible" checked class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                    <label for="section-visible" class="ml-2 text-sm text-gray-700">Visible in navigation</label>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-4">
+                    <button type="button" id="cancel-section" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                        Save Section
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Section Confirmation -->
+    <div id="delete-section-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl p-6 max-w-md w-full mx-4">
+            <div class="flex items-center mb-4">
+                <div class="p-3 bg-red-100 rounded-full mr-4">
+                    <i data-feather="trash-2" class="w-6 h-6 text-red-600"></i>
+                </div>
+                <h2 class="text-xl font-bold text-gray-800">Delete Section</h2>
+            </div>
+            <p class="text-gray-600 mb-2">Are you sure you want to delete "<span id="delete-section-name"></span>"?</p>
+            <p class="text-red-600 text-sm mb-6">Pages in this section will be unassigned but not deleted.</p>
+            <div class="flex justify-end gap-3">
+                <button id="cancel-delete-section" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
+                    Cancel
+                </button>
+                <button id="confirm-delete-section" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
+
+    <!-- Firebase Configuration -->
+    <script src="js/firebase-config.js"></script>
+
+    <!-- Core Scripts -->
+    <script src="js/auth.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/menu.js"></script>
+
+    <!-- Initialize Feather Icons -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+        });
+    </script>
+</body>
+</html>

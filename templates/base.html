@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{meta_title}} | {{site_name}}</title>
+    <meta name="description" content="{{meta_description}}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{favicon_url}}">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{meta_title}} | {{site_name}}">
+    <meta property="og:description" content="{{meta_description}}">
+    <meta property="og:image" content="{{og_image}}">
+    <meta property="og:url" content="{{page_url}}">
+    <meta property="og:type" content="website">
+
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    {{head_extra}}
+</head>
+<body>
+    <!-- Skip to main content -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="site-header">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="container">
+                <div class="top-bar-content">
+                    <div class="top-bar-left">
+                        <a href="tel:{{phone}}" class="top-link">
+                            <i data-feather="phone" class="icon-sm"></i>
+                            <span>{{phone}}</span>
+                        </a>
+                        <a href="mailto:{{email}}" class="top-link">
+                            <i data-feather="mail" class="icon-sm"></i>
+                            <span>{{email}}</span>
+                        </a>
+                    </div>
+                    <div class="top-bar-right">
+                        <a href="{{parent_portal_url}}" class="top-link" target="_blank">Parent Portal</a>
+                        <a href="{{student_portal_url}}" class="top-link" target="_blank">Student Portal</a>
+                        <a href="{{facebook_url}}" class="top-link" target="_blank" aria-label="Facebook">
+                            <i data-feather="facebook" class="icon-sm"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Navigation -->
+        <nav class="main-nav">
+            <div class="container">
+                <div class="nav-content">
+                    <!-- Logo -->
+                    <a href="/" class="logo">
+                        <img src="{{logo_url}}" alt="{{site_name}}" class="logo-img">
+                    </a>
+
+                    <!-- Desktop Menu -->
+                    <ul class="nav-menu" id="nav-menu">
+                        {{#each menu_sections}}
+                        <li class="nav-item has-mega-menu">
+                            <a href="#" class="nav-link">
+                                {{title}}
+                                <i data-feather="chevron-down" class="icon-xs"></i>
+                            </a>
+                            <!-- Mega Menu -->
+                            <div class="mega-menu">
+                                <div class="mega-menu-content">
+                                    {{#if description}}
+                                    <div class="mega-menu-header">
+                                        <h3>{{title}}</h3>
+                                        <p>{{description}}</p>
+                                    </div>
+                                    {{/if}}
+                                    <div class="mega-menu-columns">
+                                        {{#each pages}}
+                                        <a href="/{{slug}}" class="mega-menu-link">{{title}}</a>
+                                        {{/each}}
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        {{/each}}
+                    </ul>
+
+                    <!-- Quick Actions -->
+                    <div class="nav-actions">
+                        <a href="/enrol" class="btn btn-primary">Enrol Now</a>
+                        <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                            <i data-feather="menu" class="icon-md"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <div class="mobile-menu-content">
+                {{#each menu_sections}}
+                <div class="mobile-menu-section">
+                    <button class="mobile-menu-toggle-section">
+                        {{title}}
+                        <i data-feather="chevron-down" class="icon-sm"></i>
+                    </button>
+                    <div class="mobile-menu-pages">
+                        {{#each pages}}
+                        <a href="/{{slug}}" class="mobile-menu-link">{{title}}</a>
+                        {{/each}}
+                    </div>
+                </div>
+                {{/each}}
+                <a href="/enrol" class="btn btn-primary btn-block">Enrol Now</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        {{content}}
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-main">
+            <div class="container">
+                <div class="footer-grid">
+                    <!-- About Column -->
+                    <div class="footer-col footer-about">
+                        <img src="{{logo_url}}" alt="{{site_name}}" class="footer-logo">
+                        <p class="tagline">{{tagline}}</p>
+                        <div class="footer-social">
+                            <a href="{{facebook_url}}" target="_blank" aria-label="Facebook">
+                                <i data-feather="facebook"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div class="footer-col">
+                        <h4>Quick Links</h4>
+                        <ul class="footer-links">
+                            <li><a href="/about">About Us</a></li>
+                            <li><a href="/enrol">Enrolment</a></li>
+                            <li><a href="/news">News & Events</a></li>
+                            <li><a href="/contact">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Contact -->
+                    <div class="footer-col">
+                        <h4>Contact Us</h4>
+                        <address class="footer-contact">
+                            <p>
+                                <i data-feather="map-pin" class="icon-sm"></i>
+                                {{address}}
+                            </p>
+                            <p>
+                                <i data-feather="phone" class="icon-sm"></i>
+                                <a href="tel:{{phone}}">{{phone}}</a>
+                            </p>
+                            <p>
+                                <i data-feather="mail" class="icon-sm"></i>
+                                <a href="mailto:{{email}}">{{email}}</a>
+                            </p>
+                        </address>
+                    </div>
+
+                    <!-- International -->
+                    <div class="footer-col">
+                        <h4>International College</h4>
+                        <address class="footer-contact">
+                            <p>
+                                <i data-feather="phone" class="icon-sm"></i>
+                                <a href="tel:{{int_phone}}">{{int_phone}}</a>
+                            </p>
+                            <p>
+                                <i data-feather="mail" class="icon-sm"></i>
+                                <a href="mailto:{{int_email}}">{{int_email}}</a>
+                            </p>
+                            <p>
+                                <i data-feather="alert-circle" class="icon-sm"></i>
+                                Urgent: <a href="tel:{{int_urgent}}">{{int_urgent}}</a>
+                            </p>
+                        </address>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="footer-bottom-content">
+                    <p>{{footer_text}}</p>
+                    <div class="footer-bottom-links">
+                        <a href="/privacy">Privacy Policy</a>
+                        <a href="/terms">Terms of Use</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Popup Modal (if enabled) -->
+    {{#if popup_enabled}}
+    <div class="popup-modal" id="popup-modal" data-show-once="{{popup_show_once}}">
+        <div class="popup-content">
+            <button class="popup-close" id="popup-close" aria-label="Close">
+                <i data-feather="x"></i>
+            </button>
+            <h2>{{popup_title}}</h2>
+            <div class="popup-body">
+                {{popup_content}}
+            </div>
+        </div>
+    </div>
+    {{/if}}
+
+    <!-- Main JavaScript -->
+    <script src="/js/main.js"></script>
+
+    <!-- Initialize icons -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
+        });
+    </script>
+
+    {{footer_extra}}
+</body>
+</html>
