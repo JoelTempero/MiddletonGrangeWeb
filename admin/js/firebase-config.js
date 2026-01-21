@@ -29,13 +29,14 @@ try {
     db = firebase.firestore();
     storage = firebase.storage();
 
-    // Connect to emulators FIRST (before any other Firestore operations)
-    if (isDevelopment && isConfigured) {
+    // Connect to emulators in development (set USE_EMULATORS to true to enable)
+    const USE_EMULATORS = false;
+    if (USE_EMULATORS && isDevelopment && isConfigured) {
         auth.useEmulator('http://localhost:9099');
         db.useEmulator('localhost', 8080);
         storage.useEmulator('localhost', 9199);
         console.log('%c🔧 Connected to Firebase emulators', 'color: #fcc419;');
-    } else {
+    } else if (isConfigured) {
         // Only enable persistence in production (conflicts with emulators)
         db.enablePersistence({ synchronizeTabs: true })
             .catch((err) => {
