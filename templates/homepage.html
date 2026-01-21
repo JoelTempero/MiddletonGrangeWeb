@@ -1,0 +1,174 @@
+{{!-- Homepage Template --}}
+{{!-- Extends base.html --}}
+
+<!-- Hero Section -->
+<section class="hero">
+    {{#if hero_video_url}}
+    <div class="hero-video">
+        <video autoplay muted loop playsinline>
+            <source src="{{hero_video_url}}" type="video/mp4">
+        </video>
+    </div>
+    {{else if hero_image}}
+    <div class="hero-image" style="background-image: url('{{hero_image}}');"></div>
+    {{/if}}
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <div class="container">
+            <h1>{{hero_title}}</h1>
+            {{#if hero_subtitle}}
+            <p class="hero-subtitle">{{hero_subtitle}}</p>
+            {{/if}}
+            <div class="hero-buttons">
+                <a href="/enrol" class="btn btn-primary btn-lg">Enrol Now</a>
+                <a href="/about" class="btn btn-outline btn-lg">Learn More</a>
+            </div>
+        </div>
+    </div>
+    <div class="hero-scroll">
+        <a href="#intro" aria-label="Scroll down">
+            <i data-feather="chevron-down" class="icon-lg"></i>
+        </a>
+    </div>
+</section>
+
+<!-- Quick Links Bar -->
+<section class="quick-links-bar">
+    <div class="container">
+        <div class="quick-links">
+            <a href="{{parent_portal_url}}" class="quick-link" target="_blank">
+                <i data-feather="users" class="icon-md"></i>
+                <span>Parent Portal</span>
+            </a>
+            <a href="{{kindo_url}}" class="quick-link" target="_blank">
+                <i data-feather="shopping-cart" class="icon-md"></i>
+                <span>KINDO</span>
+            </a>
+            <a href="{{school_app_url}}" class="quick-link" target="_blank">
+                <i data-feather="smartphone" class="icon-md"></i>
+                <span>School App</span>
+            </a>
+            <a href="/news" class="quick-link">
+                <i data-feather="calendar" class="icon-md"></i>
+                <span>News & Events</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Intro Section -->
+<section class="intro-section" id="intro">
+    <div class="container">
+        <div class="intro-content">
+            <div class="intro-text">
+                <h2>Welcome to {{site_name}}</h2>
+                <p>{{intro_text}}</p>
+                <a href="/about" class="btn btn-secondary">About Our School</a>
+            </div>
+            <div class="intro-image">
+                <img src="{{intro_image}}" alt="Students at Middleton Grange School">
+            </div>
+        </div>
+    </div>
+</section>
+
+{{#if values_enabled}}
+<!-- Values Section -->
+<section class="values-section">
+    <div class="container">
+        <h2 class="section-title">Our Core Values</h2>
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon">
+                    <i data-feather="heart"></i>
+                </div>
+                <h3>Character</h3>
+                <p>Developing integrity, resilience, and strong moral foundations in every student.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">
+                    <i data-feather="award"></i>
+                </div>
+                <h3>Excellence</h3>
+                <p>Pursuing the highest standards in academics, sports, arts, and all endeavors.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">
+                    <i data-feather="users"></i>
+                </div>
+                <h3>Service</h3>
+                <p>Cultivating a heart for serving others and making a positive impact in our community.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">
+                    <i data-feather="sun"></i>
+                </div>
+                <h3>Glory of God</h3>
+                <p>Honoring God in all we do, guided by Christian values and faith.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{{/if}}
+
+{{#if back_to_school_enabled}}
+<!-- Back to School Section -->
+<section class="back-to-school">
+    <div class="container">
+        <div class="bts-content">
+            <div class="bts-text">
+                <h2>Back to School {{back_to_school_year}}</h2>
+                <p>Download important information for the new school year.</p>
+            </div>
+            <div class="bts-links">
+                {{#each back_to_school_links}}
+                <a href="{{url}}" class="bts-link" target="_blank">
+                    <i data-feather="download" class="icon-md"></i>
+                    <span>{{title}}</span>
+                </a>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</section>
+{{/if}}
+
+<!-- News Section -->
+<section class="news-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Latest News</h2>
+            <a href="/news" class="section-link">View All News <i data-feather="arrow-right" class="icon-sm"></i></a>
+        </div>
+        <div class="news-grid">
+            {{#each recent_news}}
+            <article class="news-card">
+                {{#if image}}
+                <div class="news-image">
+                    <img src="{{image}}" alt="{{title}}" loading="lazy">
+                </div>
+                {{/if}}
+                <div class="news-content">
+                    <span class="news-date">{{date}}</span>
+                    <h3><a href="/news/{{slug}}">{{title}}</a></h3>
+                    <p>{{excerpt}}</p>
+                </div>
+            </article>
+            {{/each}}
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="home-cta">
+    <div class="container">
+        <div class="cta-content">
+            <h2>Begin Your Journey With Us</h2>
+            <p>Discover how Middleton Grange School can help your child thrive academically, spiritually, and personally.</p>
+            <div class="cta-buttons">
+                <a href="/enrol" class="btn btn-primary btn-lg">Start Enrolment</a>
+                <a href="/contact" class="btn btn-outline-light btn-lg">Book a Tour</a>
+            </div>
+        </div>
+    </div>
+</section>

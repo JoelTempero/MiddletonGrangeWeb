@@ -1,0 +1,172 @@
+{{!-- Video Gallery Page Template --}}
+{{!-- Extends base.html --}}
+
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <h1>{{title}}</h1>
+        {{#if breadcrumbs}}
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <ol>
+                <li><a href="/">Home</a></li>
+                {{#each breadcrumbs}}
+                <li>
+                    {{#if url}}
+                    <a href="{{url}}">{{title}}</a>
+                    {{else}}
+                    <span aria-current="page">{{title}}</span>
+                    {{/if}}
+                </li>
+                {{/each}}
+            </ol>
+        </nav>
+        {{/if}}
+    </div>
+</section>
+
+<!-- Page Intro -->
+{{#if content}}
+<section class="page-intro">
+    <div class="container">
+        <div class="prose">
+            {{{content}}}
+        </div>
+    </div>
+</section>
+{{/if}}
+
+<!-- Video Categories Filter -->
+{{#if video_categories}}
+<section class="video-filters">
+    <div class="container">
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All Videos</button>
+            {{#each video_categories}}
+            <button class="filter-btn" data-filter="{{slug}}">{{name}}</button>
+            {{/each}}
+        </div>
+    </div>
+</section>
+{{/if}}
+
+<!-- Video Grid -->
+<section class="video-gallery">
+    <div class="container">
+        {{#if videos}}
+        <div class="video-grid" id="video-grid">
+            {{#each videos}}
+            <div class="video-card" data-category="{{category}}">
+                <div class="video-thumbnail" data-video-id="{{video_id}}" data-provider="{{provider}}">
+                    <img src="{{thumbnail}}" alt="{{title}}" loading="lazy">
+                    <button class="play-button" aria-label="Play video">
+                        <i data-feather="play" class="icon-lg"></i>
+                    </button>
+                    {{#if duration}}
+                    <span class="video-duration">{{duration}}</span>
+                    {{/if}}
+                </div>
+                <div class="video-info">
+                    <h3 class="video-title">{{title}}</h3>
+                    {{#if description}}
+                    <p class="video-description">{{description}}</p>
+                    {{/if}}
+                    {{#if date}}
+                    <span class="video-date">{{date}}</span>
+                    {{/if}}
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        {{else}}
+        <div class="empty-state">
+            <i data-feather="video-off" class="icon-xl"></i>
+            <h3>No Videos Available</h3>
+            <p>Check back soon for new video content.</p>
+        </div>
+        {{/if}}
+    </div>
+</section>
+
+<!-- Video Modal -->
+<div class="video-modal" id="video-modal">
+    <div class="video-modal-content">
+        <button class="video-modal-close" id="video-modal-close" aria-label="Close video">
+            <i data-feather="x"></i>
+        </button>
+        <div class="video-wrapper">
+            <div id="video-player"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Video Gallery Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Video filtering
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const videoCards = document.querySelectorAll('.video-card');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Update active state
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filter = btn.dataset.filter;
+
+            videoCards.forEach(card => {
+                if (filter === 'all' || card.dataset.category === filter) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    // Video modal
+    const modal = document.getElementById('video-modal');
+    const modalClose = document.getElementById('video-modal-close');
+    const videoPlayer = document.getElementById('video-player');
+
+    document.querySelectorAll('.video-thumbnail').forEach(thumb => {
+        thumb.addEventListener('click', () => {
+            const videoId = thumb.dataset.videoId;
+            const provider = thumb.dataset.provider || 'youtube';
+
+            let embedUrl;
+            if (provider === 'youtube') {
+                embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            } else if (provider === 'vimeo') {
+                embedUrl = `https://player.vimeo.com/video/${videoId}?autoplay=1`;
+            }
+
+            videoPlayer.innerHTML = `
+                <iframe
+                    src="${embedUrl}"
+                    frameborder="0"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    allowfullscreen
+                ></iframe>
+            `;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    function closeModal() {
+        modal.classList.remove('active');
+        videoPlayer.innerHTML = '';
+        document.body.style.overflow = '';
+    }
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+    });
+});
+</script>

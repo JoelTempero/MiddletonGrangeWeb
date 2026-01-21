@@ -1,0 +1,121 @@
+{{!-- Standard Page Template --}}
+{{!-- Extends base.html --}}
+
+<!-- Page Header -->
+{{#if header_image}}
+<section class="page-hero" style="background-image: url('{{header_image}}');">
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+        <div class="page-hero-content">
+            <h1>{{title}}</h1>
+            {{#if breadcrumbs}}
+            <nav class="breadcrumbs" aria-label="Breadcrumb">
+                <ol>
+                    <li><a href="/">Home</a></li>
+                    {{#each breadcrumbs}}
+                    <li>
+                        {{#if url}}
+                        <a href="{{url}}">{{title}}</a>
+                        {{else}}
+                        <span aria-current="page">{{title}}</span>
+                        {{/if}}
+                    </li>
+                    {{/each}}
+                </ol>
+            </nav>
+            {{/if}}
+        </div>
+    </div>
+</section>
+{{else}}
+<section class="page-header">
+    <div class="container">
+        <h1>{{title}}</h1>
+        {{#if breadcrumbs}}
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <ol>
+                <li><a href="/">Home</a></li>
+                {{#each breadcrumbs}}
+                <li>
+                    {{#if url}}
+                    <a href="{{url}}">{{title}}</a>
+                    {{else}}
+                    <span aria-current="page">{{title}}</span>
+                    {{/if}}
+                </li>
+                {{/each}}
+            </ol>
+        </nav>
+        {{/if}}
+    </div>
+</section>
+{{/if}}
+
+<!-- Page Content -->
+<section class="page-content">
+    <div class="container">
+        <div class="content-wrapper {{#if sidebar}}has-sidebar{{/if}}">
+            <!-- Main Content -->
+            <article class="main-content prose">
+                {{{content}}}
+            </article>
+
+            {{#if sidebar}}
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                {{#if sidebar_menu}}
+                <div class="sidebar-widget">
+                    <h3>In This Section</h3>
+                    <nav class="sidebar-nav">
+                        <ul>
+                            {{#each sidebar_menu}}
+                            <li class="{{#if active}}active{{/if}}">
+                                <a href="/{{slug}}">{{title}}</a>
+                            </li>
+                            {{/each}}
+                        </ul>
+                    </nav>
+                </div>
+                {{/if}}
+
+                {{#if related_links}}
+                <div class="sidebar-widget">
+                    <h3>Related Links</h3>
+                    <ul class="sidebar-links">
+                        {{#each related_links}}
+                        <li>
+                            <a href="{{url}}" {{#if external}}target="_blank" rel="noopener"{{/if}}>
+                                {{title}}
+                                {{#if external}}<i data-feather="external-link" class="icon-xs"></i>{{/if}}
+                            </a>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+                {{/if}}
+
+                {{#if contact_widget}}
+                <div class="sidebar-widget sidebar-contact">
+                    <h3>Need Help?</h3>
+                    <p>Contact us for more information</p>
+                    <a href="/contact" class="btn btn-secondary btn-block">Get in Touch</a>
+                </div>
+                {{/if}}
+            </aside>
+            {{/if}}
+        </div>
+    </div>
+</section>
+
+{{#if cta_section}}
+<!-- Call to Action -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <h2>{{cta_title}}</h2>
+            <p>{{cta_text}}</p>
+            <a href="{{cta_link}}" class="btn btn-primary btn-lg">{{cta_button}}</a>
+        </div>
+    </div>
+</section>
+{{/if}}
