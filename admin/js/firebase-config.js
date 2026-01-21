@@ -78,6 +78,26 @@ try {
     });
 }
 
+// Development mode detection
+const isDevelopment = window.location.hostname === 'localhost' ||
+                      window.location.hostname === '127.0.0.1';
+
+// Use Firebase emulators in development (uncomment when using emulators)
+if (isDevelopment && isConfigured) {
+    // Uncomment the following lines to use Firebase emulators
+     auth.useEmulator('http://localhost:9099');
+     db.useEmulator('localhost', 8080);
+     storage.useEmulator('localhost', 9199);
+    console.log('%c🔧 Running in development mode', 'color: #fcc419;');
+}
+
+// Firestore settings for better performance
+if (db) {
+    db.settings({
+        cacheSizeBytes: firebase.firestore.CACHE_SIZE_UNLIMITED
+    });
+}
+
 // Export for use in other modules
 window.firebaseConfig = firebaseConfig;
 window.firebaseApp = app;
