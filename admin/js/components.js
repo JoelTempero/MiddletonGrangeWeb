@@ -116,73 +116,89 @@ const Components = {
      * Update user information in the header
      */
     async updateUserInfo() {
-        const user = auth.currentUser;
-        if (!user) return;
+        // Use Auth module if available for cached user data
+        let user, userData;
 
-        // Get user data from Firestore
-        try {
-            const userDoc = await db.collection('users').doc(user.uid).get();
-            const userData = userDoc.exists ? userDoc.data() : {};
-
-            // Update display name
-            const displayName = userData.displayName || user.email.split('@')[0];
-            const userDisplayNameEl = document.getElementById('user-display-name');
-            if (userDisplayNameEl) {
-                userDisplayNameEl.textContent = displayName;
+        if (typeof Auth !== 'undefined' && Auth.currentUser) {
+            user = Auth.currentUser;
+            userData = Auth.currentUserData || {};
+        } else if (typeof auth !== 'undefined' && auth.currentUser) {
+            user = auth.currentUser;
+            // Fetch user data from Firestore
+            try {
+                const userDoc = await db.collection('users').doc(user.uid).get();
+                userData = userDoc.exists ? userDoc.data() : {};
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+                userData = {};
             }
-
-            // Update initials
-            const initialsEl = document.getElementById('user-initials');
-            if (initialsEl) {
-                const initials = displayName
-                    .split(' ')
-                    .map(n => n[0])
-                    .join('')
-                    .toUpperCase()
-                    .substring(0, 2);
-                initialsEl.textContent = initials;
-            }
-
-            // Update email
-            const userEmailEl = document.getElementById('user-email');
-            if (userEmailEl) {
-                userEmailEl.textContent = user.email;
-            }
-
-            // Update role badge
-            const roleBadgeEl = document.getElementById('user-role-badge');
-            if (roleBadgeEl && userData.role) {
-                const roleClass = userData.role === 'admin' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800';
-                roleBadgeEl.innerHTML = `<span class="px-2 py-0.5 ${roleClass} rounded-full capitalize">${userData.role}</span>`;
-            }
-
-            // Store role for later use
-            window.currentUserRole = userData.role || 'editor';
-
-        } catch (error) {
-            console.error('Error fetching user data:', error);
+        } else {
+            return;
         }
+
+        // Update display name
+        const displayName = userData.displayName || user.email?.split('@')[0] || 'User';
+        const userDisplayNameEl = document.getElementById('user-display-name');
+        if (userDisplayNameEl) {
+            userDisplayNameEl.textContent = displayName;
+        }
+
+        // Update initials
+        const initialsEl = document.getElementById('user-initials');
+        if (initialsEl) {
+            const initials = displayName
+                .split(' ')
+                .map(n => n[0])
+                .join('')
+                .toUpperCase()
+                .substring(0, 2);
+            initialsEl.textContent = initials || 'U';
+        }
+
+        // Update email
+        const userEmailEl = document.getElementById('user-email');
+        if (userEmailEl && user.email) {
+            userEmailEl.textContent = user.email;
+        }
+
+        // Update role badge
+        const roleBadgeEl = document.getElementById('user-role-badge');
+        if (roleBadgeEl && userData.role) {
+            const roleClass = userData.role === 'admin' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800';
+            roleBadgeEl.innerHTML = `<span class="px-2 py-0.5 ${roleClass} rounded-full capitalize">${userData.role}</span>`;
+        }
+
+        // Store role for later use
+        window.currentUserRole = userData.role || 'editor';
     },
 
     /**
      * Check if user is admin and update UI accordingly
      */
     async checkAdminAccess() {
-        const user = auth.currentUser;
-        if (!user) return;
+        // Use Auth module if available
+        let isAdmin = false;
 
-        try {
-            const userDoc = await db.collection('users').doc(user.uid).get();
-            const userData = userDoc.exists ? userDoc.data() : {};
-
-            // Hide users nav item for non-admins
-            const usersNavItem = document.getElementById('users-nav-item');
-            if (usersNavItem && userData.role !== 'admin') {
-                usersNavItem.style.display = 'none';
+        if (typeof Auth !== 'undefined') {
+            isAdmin = Auth.isAdmin();
+        } else {
+            // Fallback: fetch from Firestore
+            const user = auth?.currentUser;
+            if (user) {
+                try {
+                    const userDoc = await db.collection('users').doc(user.uid).get();
+                    const userData = userDoc.exists ? userDoc.data() : {};
+                    isAdmin = userData.role === 'admin';
+                } catch (error) {
+                    console.error('Error checking admin access:', error);
+                }
             }
+        }
 
-        } catch (error) {
-            console.error('Error checking admin access:', error);
+        // Hide users nav item for non-admins
+        const usersNavItem = document.getElementById('users-nav-item');
+        if (usersNavItem && !isAdmin) {
+            usersNavItem.style.display = 'none';
         }
     },
 
@@ -380,13 +396,25 @@ const Utils = {
 
 // Initialize components when DOM is ready and user is authenticated
 document.addEventListener('DOMContentLoaded', () => {
-    // Wait for auth state to be determined
-    auth.onAuthStateChanged((user) => {
-        if (user) {
-            // User is signed in, initialize components
-            Components.init();
+    // Check if Auth module is available (it handles its own initialization)
+    // Components will be initialized after auth state is determined
+    if (typeof Auth !== 'undefined') {
+        Auth.onAuthStateChange((user, userData) => {
+            if (user) {
+                // User is signed in, initialize components
+                Components.init();
+            }
+        });
+    } else {
+        // Fallback if Auth module isn't loaded yet
+        if (typeof auth !== 'undefined') {
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    Components.init();
+                }
+            });
         }
-    });
+    }
 });
 
 // Export for global use
