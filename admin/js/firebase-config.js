@@ -15,12 +15,12 @@
 // Firebase configuration
 // TODO: Replace with your actual Firebase project configuration
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyDp7BvTWBxH9JT3ueQs4HytaEPUbR2LJC8",
+  authDomain: "middleton-grange-a699d.firebaseapp.com",
+  projectId: "middleton-grange-a699d",
+  storageBucket: "middleton-grange-a699d.firebasestorage.app",
+  messagingSenderId: "742516889418",
+  appId: "1:742516889418:web:a7c8b4eb76d53be13893b3"
 };
 
 // Validate configuration
