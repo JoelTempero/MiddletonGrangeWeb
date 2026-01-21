@@ -126,7 +126,7 @@ const Dashboard = {
      */
     async loadLastBuildTime() {
         try {
-            const settingsDoc = await db.collection('siteSettings').doc('general').get();
+            const settingsDoc = await db.collection('siteSettings').doc('config').get();
             const lastBuildEl = document.getElementById('stat-last-build');
 
             if (settingsDoc.exists && settingsDoc.data().lastBuild && lastBuildEl) {
@@ -452,7 +452,7 @@ const Dashboard = {
 
         try {
             // Update last build timestamp in Firestore
-            await db.collection('siteSettings').doc('general').set({
+            await db.collection('siteSettings').doc('config').set({
                 lastBuild: firebase.firestore.FieldValue.serverTimestamp()
             }, { merge: true });
 

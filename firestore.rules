@@ -16,7 +16,7 @@ service cloud.firestore {
       return isAuthenticated() &&
         exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' &&
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isActive == true;
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.active == true;
     }
 
     // Check if user is an editor (includes admins)
@@ -24,7 +24,7 @@ service cloud.firestore {
       return isAuthenticated() &&
         exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['admin', 'editor'] &&
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isActive == true;
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.active == true;
     }
 
     // Validate timestamp is server time
@@ -41,10 +41,9 @@ service cloud.firestore {
 
       // Only editors can create/update pages
       allow create: if isEditor() &&
-        request.resource.data.keys().hasAll(['title', 'slug', 'content', 'isPublished', 'createdAt', 'createdBy']);
+        request.resource.data.keys().hasAll(['title', 'slug', 'status']);
 
-      allow update: if isEditor() &&
-        request.resource.data.keys().hasAll(['title', 'slug', 'content', 'isPublished', 'updatedAt', 'updatedBy']);
+      allow update: if isEditor();
 
       // Only admins can delete pages
       allow delete: if isAdmin();
@@ -84,7 +83,7 @@ service cloud.firestore {
 
       // Editors can upload and update media
       allow create: if isEditor() &&
-        request.resource.data.keys().hasAll(['filename', 'url', 'mimeType', 'uploadedAt', 'uploadedBy']);
+        request.resource.data.keys().hasAll(['filename', 'url', 'type', 'createdAt']);
 
       allow update: if isEditor();
 
@@ -106,7 +105,7 @@ service cloud.firestore {
       // Users can update their own non-role fields, admins can update everything
       allow update: if isAuthenticated() && (
         (request.auth.uid == userId &&
-          !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'isActive'])) ||
+          !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'active'])) ||
         isAdmin()
       );
 
