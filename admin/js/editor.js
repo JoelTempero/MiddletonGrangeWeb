@@ -13,6 +13,8 @@ const PageEditor = {
     isNew: true,
     menuSections: [],
     autoSaveTimer: null,
+    headerImageUrl: null,
+    headerImageAlt: null,
 
     /**
      * Initialize the page editor
@@ -380,12 +382,101 @@ const PageEditor = {
     },
 
     /**
-     * Show image picker (simplified - uses URL input)
+     * Show image picker modal
      */
     showImagePicker() {
-        const url = prompt('Enter image URL:');
-        if (url) {
-            this.editor.chain().focus().setImage({ src: url }).run();
+        // Use ImagePicker from media.js if available
+        if (typeof ImagePicker !== 'undefined') {
+            ImagePicker.open((image) => {
+                if (image && image.url) {
+                    this.editor.chain().focus().setImage({
+                        src: image.url,
+                        alt: image.alt || ''
+                    }).run();
+                }
+            });
+        } else {
+            // Fallback to prompt
+            const url = prompt('Enter image URL:');
+            if (url) {
+                this.editor.chain().focus().setImage({ src: url }).run();
+            }
+        }
+    },
+
+    /**
+     * Initialize header image picker
+     */
+    initHeaderImagePicker() {
+        const container = document.getElementById('header-image-container');
+        if (!container) return;
+
+        container.addEventListener('click', () => {
+            if (typeof ImagePicker !== 'undefined') {
+                ImagePicker.open((image) => {
+                    if (image && image.url) {
+                        this.setHeaderImage(image.url, image.alt);
+                    }
+                });
+            } else {
+                const url = prompt('Enter header image URL:');
+                if (url) {
+                    this.setHeaderImage(url, '');
+                }
+            }
+        });
+    },
+
+    /**
+     * Set header image
+     * @param {string} url
+     * @param {string} alt
+     */
+    setHeaderImage(url, alt = '') {
+        const container = document.getElementById('header-image-container');
+        const placeholder = document.getElementById('header-image-placeholder');
+
+        if (container) {
+            container.innerHTML = `
+                <div class="relative">
+                    <img src="${url}" alt="${Utils.escapeHtml(alt)}" class="w-full h-48 object-cover rounded-lg">
+                    <button type="button" id="remove-header-image" class="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors">
+                        <i data-feather="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            `;
+            feather.replace();
+
+            // Store the URL
+            this.headerImageUrl = url;
+            this.headerImageAlt = alt;
+            this.markDirty();
+
+            // Bind remove button
+            document.getElementById('remove-header-image')?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.removeHeaderImage();
+            });
+        }
+    },
+
+    /**
+     * Remove header image
+     */
+    removeHeaderImage() {
+        const container = document.getElementById('header-image-container');
+        if (container) {
+            container.innerHTML = `
+                <div id="header-image-placeholder">
+                    <i data-feather="image" class="w-12 h-12 mx-auto text-gray-400 mb-2"></i>
+                    <p class="text-gray-500">Click to select a header image</p>
+                </div>
+            `;
+            feather.replace();
+
+            this.headerImageUrl = null;
+            this.headerImageAlt = null;
+            this.markDirty();
         }
     },
 
@@ -393,6 +484,9 @@ const PageEditor = {
      * Initialize event listeners
      */
     initEventListeners() {
+        // Header image picker
+        this.initHeaderImagePicker();
+
         // Title input - auto-generate slug
         const titleInput = document.getElementById('page-title');
         const slugInput = document.getElementById('page-slug');
@@ -534,6 +628,11 @@ const PageEditor = {
 
         // Handle page type
         this.handlePageTypeChange(data.pageType || 'standard');
+
+        // Load header image if exists
+        if (data.headerImage) {
+            this.setHeaderImage(data.headerImage, data.headerImageAlt || '');
+        }
 
         // Reset dirty state after populating
         this.isDirty = false;
@@ -695,7 +794,9 @@ const PageEditor = {
             pageType: document.getElementById('page-type')?.value || 'standard',
             metaTitle: document.getElementById('page-meta-title')?.value?.trim() || '',
             metaDescription: document.getElementById('page-meta-description')?.value?.trim() || '',
-            content: this.editor ? this.editor.getHTML() : (document.getElementById('content-fallback')?.value || '')
+            content: this.editor ? this.editor.getHTML() : (document.getElementById('content-fallback')?.value || ''),
+            headerImage: this.headerImageUrl || null,
+            headerImageAlt: this.headerImageAlt || ''
         };
 
         return data;
