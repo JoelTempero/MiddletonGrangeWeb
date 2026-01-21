@@ -48,20 +48,24 @@
                             <a href="pages.html" class="text-gray-500 hover:text-gray-700 mr-4">
                                 <i data-feather="arrow-left" class="w-5 h-5"></i>
                             </a>
-                            <h1 class="text-xl font-bold text-gray-800" id="editor-title">New Page</h1>
+                            <h1 class="text-xl font-bold text-gray-800" id="editor-page-title">New Page</h1>
                             <span id="save-status" class="ml-4 text-sm text-gray-500"></span>
                         </div>
                         <div class="flex items-center gap-3">
-                            <button id="preview-btn" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
+                            <button id="preview-page" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
                                 <i data-feather="eye" class="w-4 h-4 inline-block mr-1"></i>
                                 Preview
                             </button>
-                            <button id="save-draft-btn" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
-                                Save Draft
+                            <button id="save-page" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
+                                <span class="btn-text">Save Draft</span>
                             </button>
-                            <button id="publish-btn" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
-                                <i data-feather="check" class="w-4 h-4 inline-block mr-1"></i>
+                            <button id="publish-page" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                                <i data-feather="globe" class="w-4 h-4 inline-block mr-1"></i>
                                 Publish
+                            </button>
+                            <button id="delete-page" class="hidden px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition-colors">
+                                <i data-feather="trash-2" class="w-4 h-4 inline-block mr-1"></i>
+                                Delete
                             </button>
                         </div>
                     </div>
@@ -209,10 +213,10 @@
 
                                     <!-- Menu Section -->
                                     <div>
-                                        <label for="menu-section" class="block text-sm font-medium text-gray-700 mb-1">
+                                        <label for="page-menu-section" class="block text-sm font-medium text-gray-700 mb-1">
                                             Menu Section
                                         </label>
-                                        <select id="menu-section" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                        <select id="page-menu-section" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                             <option value="">-- Select Section --</option>
                                             <!-- Options loaded dynamically -->
                                         </select>
@@ -249,20 +253,38 @@
                             <div class="bg-white rounded-lg shadow p-6">
                                 <h3 class="font-semibold text-gray-800 mb-4">SEO Settings</h3>
 
-                                <div>
-                                    <label for="meta-description" class="block text-sm font-medium text-gray-700 mb-1">
-                                        Meta Description
-                                    </label>
-                                    <textarea
-                                        id="meta-description"
-                                        rows="3"
-                                        maxlength="160"
-                                        placeholder="Brief description for search engines (max 160 characters)..."
-                                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                                    ></textarea>
-                                    <p class="text-xs text-gray-500 mt-1">
-                                        <span id="meta-char-count">0</span>/160 characters
-                                    </p>
+                                <div class="space-y-4">
+                                    <!-- Meta Title -->
+                                    <div>
+                                        <label for="page-meta-title" class="block text-sm font-medium text-gray-700 mb-1">
+                                            Meta Title
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="page-meta-title"
+                                            maxlength="70"
+                                            placeholder="Custom title for search engines (optional)..."
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        >
+                                        <p class="text-xs text-gray-500 mt-1">Leave blank to use page title</p>
+                                    </div>
+
+                                    <!-- Meta Description -->
+                                    <div>
+                                        <label for="page-meta-description" class="block text-sm font-medium text-gray-700 mb-1">
+                                            Meta Description
+                                        </label>
+                                        <textarea
+                                            id="page-meta-description"
+                                            rows="3"
+                                            maxlength="160"
+                                            placeholder="Brief description for search engines (max 160 characters)..."
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        ></textarea>
+                                        <p class="text-xs text-gray-500 mt-1">
+                                            <span id="meta-char-count">0</span>/160 characters
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
 
@@ -313,16 +335,22 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage-compat.js"></script>
 
+    <!-- TipTap Editor (UMD bundle for browser) -->
+    <script src="https://cdn.jsdelivr.net/npm/@tiptap/core@2.1.13/dist/index.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tiptap/starter-kit@2.1.13/dist/index.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tiptap/extension-link@2.1.13/dist/index.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tiptap/extension-image@2.1.13/dist/index.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tiptap/extension-placeholder@2.1.13/dist/index.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tiptap/extension-underline@2.1.13/dist/index.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tiptap/extension-text-align@2.1.13/dist/index.umd.js"></script>
+
     <!-- Firebase Configuration -->
     <script src="js/firebase-config.js"></script>
-
-    <!-- TipTap Editor (ES Modules) -->
-    <script type="module" src="js/editor.js"></script>
 
     <!-- Core Scripts -->
     <script src="js/auth.js"></script>
     <script src="js/components.js"></script>
-    <script src="js/page-editor.js"></script>
+    <script src="js/editor.js"></script>
 
     <!-- Initialize Feather Icons -->
     <script>
