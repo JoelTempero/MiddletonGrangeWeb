@@ -17,7 +17,9 @@
     "deploy:public": "npm run build && firebase deploy --only hosting:public",
     "deploy:rules": "firebase deploy --only firestore:rules,storage:rules",
     "lint": "eslint admin/js/**/*.js build/**/*.js",
-    "test": "echo \"No tests configured yet\""
+    "test": "echo \"No tests configured yet\"",
+    "migrate": "node migration/migrate.js",
+    "migrate:dry-run": "node migration/migrate.js --dry-run --verbose"
   },
   "keywords": [
     "cms",
@@ -29,8 +31,10 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
+    "fast-xml-parser": "^4.3.3",
     "firebase-admin": "^12.0.0",
     "handlebars": "^4.7.8",
+    "jsdom": "^24.0.0",
     "marked": "^11.1.0",
     "sharp": "^0.33.2",
     "slugify": "^1.6.6"
