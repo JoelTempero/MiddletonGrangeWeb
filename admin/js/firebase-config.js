@@ -1,19 +1,8 @@
 /**
  * Middleton Grange CMS - Firebase Configuration
- *
- * IMPORTANT: Replace the placeholder values below with your actual
- * Firebase project configuration from the Firebase Console.
- *
- * To get your config:
- * 1. Go to https://console.firebase.google.com/
- * 2. Select your project (or create a new one)
- * 3. Click the gear icon → Project settings
- * 4. Scroll down to "Your apps" → Web app
- * 5. Copy the firebaseConfig object
  */
 
 // Firebase configuration
-// TODO: Replace with your actual Firebase project configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDp7BvTWBxH9JT3ueQs4HytaEPUbR2LJC8",
   authDomain: "middleton-grange-a699d.firebaseapp.com",
@@ -26,17 +15,6 @@ const firebaseConfig = {
 // Validate configuration
 const isConfigured = firebaseConfig.apiKey !== "YOUR_API_KEY" &&
                      firebaseConfig.projectId !== "YOUR_PROJECT_ID";
-
-if (!isConfigured) {
-    console.warn(
-        '%c⚠️ Firebase not configured!',
-        'color: #ff6b6b; font-size: 14px; font-weight: bold;'
-    );
-    console.warn(
-        'Please update admin/js/firebase-config.js with your Firebase project credentials.\n' +
-        'See: https://console.firebase.google.com/'
-    );
-}
 
 // Development mode detection
 const isDevelopment = window.location.hostname === 'localhost' ||
