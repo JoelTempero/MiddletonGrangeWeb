@@ -97,9 +97,9 @@ const isDevelopment = window.location.hostname === 'localhost' ||
 // Use Firebase emulators in development (uncomment when using emulators)
 if (isDevelopment && isConfigured) {
     // Uncomment the following lines to use Firebase emulators
-    // auth.useEmulator('http://localhost:9099');
-    // db.useEmulator('localhost', 8080);
-    // storage.useEmulator('localhost', 9199);
+     auth.useEmulator('http://localhost:9099');
+     db.useEmulator('localhost', 8080);
+     storage.useEmulator('localhost', 9199);
     console.log('%c🔧 Running in development mode', 'color: #fcc419;');
 }
 
