@@ -44,3 +44,13 @@ temp/
 # Firebase service account key (NEVER commit this!)
 *-firebase-adminsdk-*.json
 serviceAccountKey.json
+# --- sidequest backup .gitignore (managed) ---
+dist/
+build/
+.next/
+.turbo/
+*.sst
+SITE/site.zip
+*.mp4
+*.mov
+# .env is intentionally NOT ignored (disaster recovery)

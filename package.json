@@ -1,49 +1,30 @@
 {
-  "name": "middleton-grange-cms",
-  "version": "1.0.0",
-  "description": "Custom CMS for Middleton Grange School website",
-  "main": "build/generate-site.js",
-  "scripts": {
-    "build": "node build/generate-site.js",
-    "build:dev": "node build/generate-site.js --dev",
-    "serve": "firebase serve",
-    "serve:admin": "firebase serve --only hosting:admin",
-    "serve:public": "firebase serve --only hosting:public",
-    "emulators": "firebase emulators:start",
-    "emulators:import": "firebase emulators:start --import=./emulator-data",
-    "emulators:export": "firebase emulators:export ./emulator-data",
-    "deploy": "npm run build && firebase deploy",
-    "deploy:admin": "firebase deploy --only hosting:admin",
-    "deploy:public": "npm run build && firebase deploy --only hosting:public",
-    "deploy:rules": "firebase deploy --only firestore:rules,storage:rules",
-    "lint": "eslint admin/js/**/*.js build/**/*.js",
-    "test": "echo \"No tests configured yet\"",
-    "migrate": "node migration/migrate.js",
-    "migrate:dry-run": "node migration/migrate.js --dry-run --verbose"
-  },
-  "keywords": [
-    "cms",
-    "school",
-    "firebase",
-    "static-site-generator"
-  ],
-  "author": "Middleton Grange School",
-  "license": "UNLICENSED",
+  "name": "middleton-grange-website",
+  "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "fast-xml-parser": "^4.3.3",
-    "firebase-admin": "^12.0.0",
-    "handlebars": "^4.7.8",
-    "jsdom": "^24.0.0",
-    "marked": "^11.1.0",
-    "sharp": "^0.33.2",
-    "slugify": "^1.6.6"
-  },
-  "devDependencies": {
-    "eslint": "^8.56.0",
-    "firebase-tools": "^13.0.0"
+  "description": "Middleton Grange School website — scraped archive + new design",
+  "type": "module",
+  "scripts": {
+    "dev": "serve public --listen 4321 --no-port-switching",
+    "build": "node scripts/build.js",
+    "build:test": "node scripts/build.js --limit=10",
+    "build:no-media": "node scripts/build.js --no-media",
+    "scrape": "node scripts/scrape.js",
+    "scrape:resume": "node scripts/scrape.js --resume",
+    "scrape:test": "node scripts/scrape.js --limit=5",
+    "upgrade-images": "node scripts/upgrade-images.js"
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "marked": "^18.0.3",
+    "p-queue": "^8.0.1",
+    "slugify": "^1.6.6",
+    "turndown": "^7.1.3"
+  },
+  "devDependencies": {
+    "serve": "^14.2.6"
   }
 }

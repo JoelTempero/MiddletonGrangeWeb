@@ -1,0 +1,240 @@
+/* ============================================================
+   ACCESSIBILITY + READABILITY OVERRIDES
+   Loaded after each page's inline <style> so these rules win.
+   Touch points:
+     · base reading size + line-height
+     · visible focus rings (light & dark variants)
+     · skip-to-content link
+     · contrast bumps on Cormorant body text on dark backgrounds
+     · prefers-reduced-motion
+     · text-wrap rhythm
+   ============================================================ */
+
+/* ─── 1. Base reading size ──────────────────────────────────── */
+body {
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+/* ─── 2. Visible-only focus rings ───────────────────────────── */
+:focus { outline: none; }
+
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #6E1B1B;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Dark backgrounds — switch to the lighter coral accent */
+.page-hero a:focus-visible,
+.hero-stage a:focus-visible,
+.hero a:focus-visible,
+.foundation a:focus-visible,
+.schools-section a:focus-visible,
+.houses-teaser a:focus-visible,
+.visit a:focus-visible,
+.timeline a:focus-visible,
+.annual a:focus-visible,
+.crest-section a:focus-visible,
+.fs a:focus-visible,
+.process a:focus-visible,
+.zones a:focus-visible,
+.faq a:focus-visible,
+.ncea a:focus-visible,
+.arts a:focus-visible,
+.support a:focus-visible,
+.hours a:focus-visible,
+.suborgs a:focus-visible,
+.descent a:focus-visible,
+.pole a:focus-visible,
+.return a:focus-visible,
+.footer a:focus-visible,
+.rail a:focus-visible {
+  outline-color: #E58F7B;
+}
+
+.rail-cta:focus-visible,
+.descend-btn:focus-visible,
+.cta-row a:focus-visible,
+.ec-cta .btn:focus-visible,
+.visit-cta .big:focus-visible {
+  outline-offset: 4px;
+}
+
+/* ─── 3. Skip-to-content link ───────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -200px;
+  left: 16px;
+  z-index: 200;
+  padding: 12px 20px;
+  background: #0F0B07;
+  color: #F5F0E6;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: top 0.25s ease;
+}
+.skip-link:focus-visible {
+  top: 16px;
+  outline: 2px solid #E58F7B;
+  outline-offset: 3px;
+}
+
+/* ─── 4. Body-text contrast on DARK backgrounds ─────────────── */
+/* Originals were 0.7–0.78 opacity. WCAG-friendly at 0.88+ */
+
+/* Home */
+.page-hero .lede,
+.foundation .foundation-head .sub,
+.foundation .value p,
+.foundation .value .scripture,
+.schools-section .school-content p,
+.houses-teaser .right p,
+.visit .lead,
+.visit-cta .note,
+.ticker {
+  color: rgba(245, 240, 230, 0.88);
+}
+
+/* About */
+.timeline .timeline-top p,
+.timeline .decade p,
+.annual .note,
+.fs .fs-row p,
+.crest-section .crest-row dd small {
+  color: rgba(245, 240, 230, 0.88);
+}
+
+/* Enrol */
+.process .process-head p,
+.process .step p,
+.process .step .meta,
+.process .step .meta b,
+.zones .zones-head p,
+.faq .faq-head p,
+.faq .faq-item p {
+  color: rgba(245, 240, 230, 0.88);
+}
+
+/* Learning */
+.ncea .ncea-head p,
+.ncea .level p,
+.ncea .level .what,
+.arts .arts-head p,
+.arts .art p,
+.support .support-head h2,
+.support .sup-cell p {
+  color: rgba(245, 240, 230, 0.88);
+}
+
+/* Contact */
+.hours .hours-head p,
+.hours .hour-row .time,
+.suborgs .suborg p,
+.suborgs .suborg dl dd a,
+.suborgs .suborg dl {
+  color: rgba(245, 240, 230, 0.88);
+}
+
+/* Houses */
+.hero .sub,
+.intro p,
+.station-figure,
+.station-text p,
+.station-text .quote,
+.pole .lead,
+.return p {
+  color: rgba(245, 240, 230, 0.92);
+}
+.quote-cite,
+.lat-place {
+  color: rgba(245, 240, 230, 0.7);
+}
+
+/* ─── 5. Mono labels on dark — better contrast ──────────────── */
+.page-hero .lab,
+.timeline-top .section-lab,
+.fs-head .section-lab,
+.process-head .section-lab,
+.zones-head .section-lab,
+.faq-head .section-lab,
+.ncea-head .section-lab,
+.arts-head .section-lab,
+.support-head .section-lab,
+.hours-head .section-lab,
+.suborgs-head .section-lab,
+.foundation .section-eyebrow,
+.houses-teaser .lab,
+.visit .lab,
+.crest-section .crest-details .section-lab {
+  color: #E58F7B;
+}
+
+/* Crumb rails on hero — bump from 0.5 to 0.72 */
+.crumb-rail,
+.hero-meta {
+  color: rgba(245, 240, 230, 0.72);
+}
+
+/* ─── 6. Min line-height for long-read text ─────────────────── */
+.principal-letter,
+.special .body,
+.kahika .body,
+.faq-item p,
+.station-text p,
+.intro p,
+.step p,
+.principal-letter p {
+  line-height: 1.65;
+}
+
+/* ─── 7. text-wrap rhythm ───────────────────────────────────── */
+p, .station-figure, .visit .lede {
+  text-wrap: pretty;
+}
+h1, h2, h3,
+.station-name, .visit h2, .footer-mark,
+.hero-verse, .hero h1, .page-hero h1,
+.entry-left h2, .schools-head h2,
+.foundation h2, .houses-teaser h2,
+.special .section-head h2,
+.timeline-top h2, .leaders-head h2 {
+  text-wrap: balance;
+}
+
+/* ─── 8. Reduced motion ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .ticker-track,
+  .compass,
+  .crest-svg .ring,
+  .crest-svg .ring-inner,
+  .hero-image,
+  .pin {
+    animation: none !important;
+  }
+}
+
+/* ─── 9. Underline links inside body copy ───────────────────── */
+.principal-letter a,
+.special .body a,
+.kahika .body a,
+.faq-item p a,
+.fees-foot a,
+.faq-head p a {
+  border-bottom: 1px solid currentColor;
+}

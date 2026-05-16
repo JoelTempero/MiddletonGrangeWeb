@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About — Middleton Grange School</title>
+<meta name="description" content="A Year 1–13 Christian school in Upper Riccarton, Christchurch. Established 1964. Character, excellence, service for the glory of God." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600;1,700&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
+
+<style>
+:root {
+  --bone:   #F5F0E6;
+  --bone-2: #EDE6D6;
+  --bone-3: #E1D8C2;
+  --ink:    #0F0B07;
+  --ink-2:  #2B231B;
+  --ink-3:  #5A4F40;
+  --ink-4:  #9C9180;
+  --accent: #6E1B1B;
+  --accent-2: #E58F7B;
+  --rule:   rgba(15,11,7,0.10);
+  --rule-2: rgba(15,11,7,0.22);
+  --rule-d: rgba(245,240,230,0.10);
+  --rule-d2:rgba(245,240,230,0.22);
+  --serif: 'Cormorant Garamond','EB Garamond','Times New Roman',serif;
+  --sans:  'Inter Tight',-apple-system,system-ui,sans-serif;
+  --mono:  'JetBrains Mono',ui-monospace,monospace;
+  --pad: 56px;
+  --maxw: 1440px;
+}
+* { margin:0; padding:0; box-sizing: border-box; }
+html, body { background: var(--bone); }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  line-height: 1.55;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+img,svg { display: block; max-width: 100%; }
+
+/* ======= RAIL (shared) ======= */
+.rail {
+  position: fixed; top:0; left:0; right:0; z-index: 80;
+  padding: 22px var(--pad);
+  display: grid; grid-template-columns: auto 1fr auto;
+  gap: 32px; align-items: center;
+  pointer-events: none;
+  mix-blend-mode: difference;
+}
+.rail > * { pointer-events: auto; }
+.rail .mark {
+  font-family: var(--serif);
+  font-style: italic; font-weight: 400;
+  font-size: 20px; letter-spacing: -0.02em;
+  color: var(--bone);
+  display: inline-flex; align-items: baseline; gap: 6px;
+}
+.rail .mark .amp { color: var(--accent-2); font-weight: 300; }
+.rail-nav {
+  display: flex; gap: 4px;
+  justify-self: center;
+}
+.rail-nav a {
+  padding: 8px 14px;
+  font-size: 13px; color: var(--bone);
+  position: relative;
+}
+.rail-nav a.is-current { color: var(--accent-2); }
+.rail-nav a::after {
+  content: ''; position: absolute;
+  bottom: 4px; left: 14px; right: 14px;
+  height: 1px; background: currentColor;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .35s cubic-bezier(.2,.7,.2,1);
+}
+.rail-nav a:hover::after, .rail-nav a.is-current::after { transform: scaleX(1); }
+.rail-cta {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 12px; letter-spacing: 0.04em; font-weight: 400;
+  color: var(--bone);
+  border: 1px solid rgba(245,240,230,0.3);
+  padding: 9px 16px; border-radius: 999px;
+  transition: background .3s, color .3s, border-color .3s;
+}
+.rail-cta:hover { background: var(--bone); color: var(--ink); border-color: var(--bone); }
+
+/* ======= HERO ======= */
+.page-hero {
+  position: relative;
+  min-height: 86vh;
+  display: grid; place-items: center;
+  background: var(--ink);
+  color: var(--bone);
+  overflow: hidden;
+  padding: 140px var(--pad) 60px;
+}
+.page-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 80%, rgba(110,27,27,0.25), transparent 60%),
+    radial-gradient(ellipse at 75% 20%, rgba(245,240,230,0.03), transparent 50%);
+}
+.page-hero::after {
+  content: '';
+  position: absolute; inset:0;
+  background-image: repeating-linear-gradient(0deg, rgba(245,240,230,0.02) 0 1px, transparent 1px 3px);
+  pointer-events: none;
+}
+.page-hero-inner {
+  position: relative;
+  max-width: var(--maxw);
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: end;
+  z-index: 2;
+}
+.page-hero .lab {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  margin-bottom: 32px;
+  display: flex; align-items: center; gap: 14px;
+}
+.page-hero .lab::before { content: ''; width: 36px; height: 1px; background: currentColor; }
+
+.page-hero h1 {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(82px, 13vw, 240px);
+  line-height: 0.86;
+  letter-spacing: -0.05em;
+}
+.page-hero h1 em { font-style: italic; color: var(--accent-2); font-weight: 300; }
+.page-hero .lede {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(20px, 1.7vw, 28px);
+  line-height: 1.45;
+  color: rgba(245,240,230,0.78);
+  max-width: 520px;
+}
+.page-hero .lede b {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--bone);
+}
+
+.crumb-rail {
+  position: absolute;
+  bottom: 30px;
+  left: var(--pad); right: var(--pad);
+  display: flex; justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(245,240,230,0.5);
+}
+
+/* ======= SECTION SCAFFOLD ======= */
+section { position: relative; }
+.section-lab {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 28px;
+  display: flex; align-items: center; gap: 14px;
+}
+.section-lab::before { content: ''; width: 36px; height: 1px; background: currentColor; }
+
+.section-head h2 {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(44px, 6vw, 108px);
+  line-height: 0.9;
+  letter-spacing: -0.035em;
+}
+.section-head h2 em { font-style: italic; color: var(--accent); font-weight: 300; }
+
+/* ======= PRINCIPAL ======= */
+.principal {
+  background: var(--bone);
+  color: var(--ink);
+  padding: 20vh var(--pad);
+}
+.principal-inner {
+  max-width: var(--maxw); margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.85fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.principal-portrait {
+  position: sticky; top: 12vh;
+}
+.principal-portrait .pic {
+  aspect-ratio: 3/4;
+  background:
+    repeating-linear-gradient(135deg, rgba(110,27,27,0.06) 0 2px, transparent 2px 16px),
+    linear-gradient(160deg, #C9B998 0%, #8a7960 100%);
+  border-radius: 2px;
+  position: relative;
+}
+.principal-portrait .pic::after {
+  content: 'Portrait · Mr Gregg Le Roux';
+  position: absolute;
+  left: 18px; top: 18px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(15,11,7,0.55);
+  background: rgba(245,240,230,0.4);
+  padding: 4px 8px; border-radius: 2px;
+}
+.principal-portrait .nameblock {
+  margin-top: 24px;
+  font-family: var(--serif);
+}
+.principal-portrait .nameblock .name {
+  font-style: italic;
+  font-weight: 400;
+  font-size: 28px;
+  letter-spacing: -0.015em;
+}
+.principal-portrait .nameblock .role {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-top: 4px;
+}
+
+.principal-letter {
+  font-family: var(--serif);
+  font-size: clamp(20px, 1.8vw, 26px);
+  line-height: 1.55;
+  letter-spacing: -0.005em;
+  color: var(--ink-2);
+}
+.principal-letter p { margin-bottom: 28px; }
+.principal-letter p:first-child::first-letter {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: 6em;
+  line-height: 0.86;
+  float: left;
+  margin: 4px 14px 0 0;
+  color: var(--accent);
+  font-style: italic;
+}
+.principal-letter em {
+  font-style: italic;
+  color: var(--accent);
+}
+.principal-letter .signoff {
+  margin-top: 36px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+  font-style: italic;
+  color: var(--ink-3);
+  font-size: 18px;
+}
+
+/* ======= TIMELINE ======= */
+.timeline {
+  background: var(--ink);
+  color: var(--bone);
+  position: relative;
+}
+.timeline-top {
+  padding: 20vh var(--pad) 6vh;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: end;
+}
+.timeline-top .section-lab { color: rgba(245,240,230,0.55); }
+.timeline-top h2 { color: var(--bone); }
+.timeline-top h2 em { color: var(--accent-2); }
+.timeline-top p {
+  font-family: var(--serif);
+  font-size: clamp(18px, 1.5vw, 22px);
+  line-height: 1.55;
+  color: rgba(245,240,230,0.75);
+  max-width: 500px;
+  letter-spacing: -0.005em;
+}
+.timeline-track {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0;
+  padding: 0 var(--pad) 18vh;
+  max-width: var(--maxw); margin: 0 auto;
+}
+.decade {
+  padding: 28px 22px;
+  border-top: 1px solid rgba(245,240,230,0.18);
+  border-right: 1px solid var(--rule-d);
+  position: relative;
+  display: flex; flex-direction: column; gap: 14px;
+  min-height: 320px;
+}
+.decade:last-child { border-right: 0; }
+.decade::before {
+  content: '';
+  position: absolute;
+  top: -4px; left: -1px;
+  width: 7px; height: 7px;
+  background: var(--accent-2);
+  border-radius: 50%;
+}
+.decade .year {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 36px;
+  line-height: 1;
+  color: var(--accent-2);
+  letter-spacing: -0.02em;
+}
+.decade .yrs {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(245,240,230,0.5);
+}
+.decade h4 {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 1.2;
+  color: var(--bone);
+}
+.decade p {
+  font-family: var(--serif);
+  font-size: 14px;
+  color: rgba(245,240,230,0.7);
+  line-height: 1.5;
+}
+
+/* ======= CHARACTER ======= */
+.special {
+  background: var(--bone);
+  padding: 22vh var(--pad);
+}
+.special-inner {
+  max-width: var(--maxw); margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 80px;
+  align-items: start;
+}
+.special h2 em { color: var(--accent); }
+.special .body {
+  font-family: var(--serif);
+  font-size: clamp(19px, 1.5vw, 23px);
+  line-height: 1.6;
+  color: var(--ink-2);
+  letter-spacing: -0.005em;
+}
+.special .body p { margin-bottom: 22px; }
+.special .body em { color: var(--accent); font-style: italic; }
+.special-stats {
+  margin-top: 64px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px;
+  padding-top: 36px;
+  border-top: 1px solid var(--rule);
+}
+.special-stats dt {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 8px;
+}
+.special-stats dd {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 28px;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+/* ======= ANNUAL THEME ======= */
+.annual {
+  background: var(--ink);
+  color: var(--bone);
+  padding: 22vh var(--pad);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+.annual::before {
+  content:'';
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(110,27,27,0.18), transparent 60%);
+}
+.annual-inner {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.annual .lab {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--accent-2);
+  margin-bottom: 36px;
+}
+.annual .verse {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(48px, 7.5vw, 132px);
+  line-height: 1.0;
+  letter-spacing: -0.04em;
+}
+.annual .verse em {
+  font-style: italic;
+  color: var(--accent-2);
+  font-weight: 300;
+}
+.annual .ref {
+  margin-top: 40px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(245,240,230,0.6);
+}
+.annual .note {
+  margin: 40px auto 0;
+  max-width: 640px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 19px;
+  line-height: 1.55;
+  color: rgba(245,240,230,0.78);
+}
+
+/* ======= LEADERSHIP ======= */
+.leaders {
+  background: var(--bone);
+  padding: 22vh var(--pad);
+}
+.leaders-inner { max-width: var(--maxw); margin: 0 auto; }
+.leaders-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: end;
+  margin-bottom: 64px;
+}
+.leaders-head p {
+  font-family: var(--serif);
+  font-size: clamp(18px, 1.4vw, 22px);
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 500px;
+}
+.leaders-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--rule-2);
+  border-top: 1px solid var(--rule-2);
+  border-bottom: 1px solid var(--rule-2);
+}
+.leader {
+  background: var(--bone);
+  padding: 28px 24px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: background .3s;
+}
+.leader:hover { background: var(--bone-2); }
+.leader .face {
+  aspect-ratio: 4/5;
+  background:
+    repeating-linear-gradient(135deg, rgba(15,11,7,0.04) 0 2px, transparent 2px 14px),
+    linear-gradient(160deg, #D0BFA0 0%, #968266 100%);
+  border-radius: 2px;
+  position: relative;
+}
+.leader .face::after {
+  content: attr(data-init);
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 70px;
+  color: rgba(15,11,7,0.18);
+  letter-spacing: -0.02em;
+}
+.leader h3 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+.leader h3 em { font-style: italic; font-weight: 400; color: var(--accent); }
+.leader .role {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  margin-top: -4px;
+}
+.leaders-tail {
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 32px;
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--ink-2);
+  line-height: 1.55;
+}
+.leaders-tail h5 {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 8px;
+  font-weight: 400;
+}
+.leaders-tail a {
+  font-style: italic;
+  color: var(--accent);
+}
+
+/* ======= CREST / MOTTO ======= */
+.crest-section {
+  background: var(--ink);
+  color: var(--bone);
+  padding: 22vh var(--pad);
+  position: relative;
+  overflow: hidden;
+}
+.crest-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.85fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.crest-svg {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+.crest-svg .ring { animation: rotate 60s linear infinite; transform-origin: 200px 200px; }
+.crest-svg .ring-inner { animation: rotate 90s linear infinite reverse; transform-origin: 200px 200px; }
+@keyframes rotate { to { transform: rotate(360deg); } }
+
+.crest-details {
+  display: flex; flex-direction: column; gap: 28px;
+}
+.crest-details .lab { color: var(--accent-2); }
+.crest-details h2 em { color: var(--accent-2); }
+.crest-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 24px;
+  padding: 18px 0;
+  border-top: 1px solid var(--rule-d);
+  align-items: baseline;
+}
+.crest-row:first-of-type { border-top: 1px solid var(--rule-d2); margin-top: 12px; padding-top: 22px; }
+.crest-row dt {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(245,240,230,0.55);
+}
+.crest-row dd {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(20px, 1.7vw, 26px);
+  line-height: 1.3;
+  color: var(--bone);
+  letter-spacing: -0.005em;
+}
+.crest-row dd small {
+  display: block;
+  font-style: normal;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(245,240,230,0.5);
+  margin-top: 6px;
+}
+
+/* ======= AFFILIATIONS ======= */
+.affil {
+  background: var(--bone);
+  padding: 20vh var(--pad);
+}
+.affil-inner {
+  max-width: var(--maxw); margin: 0 auto;
+}
+.affil-head { margin-bottom: 56px; }
+.affil-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--rule-2);
+}
+.affil-row {
+  display: flex; flex-direction: column;
+  gap: 6px;
+  padding: 28px 24px 24px 0;
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.affil-row:nth-child(4n) { border-right: 0; }
+.affil-row .lab {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.affil-row .name {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  margin-top: 6px;
+}
+.affil-row .place {
+  font-family: var(--serif);
+  font-size: 14px;
+  color: var(--ink-3);
+}
+
+/* ======= FOUR SCHOOLS ANCHORED ======= */
+.fs {
+  background: var(--ink);
+  color: var(--bone);
+  padding: 18vh var(--pad);
+  border-top: 1px solid var(--rule-d2);
+}
+.fs-inner { max-width: var(--maxw); margin: 0 auto; }
+.fs h2 { color: var(--bone); margin-bottom: 56px; }
+.fs h2 em { color: var(--accent-2); }
+.fs-head .section-lab { color: rgba(245,240,230,0.55); }
+.fs-list {
+  display: flex; flex-direction: column;
+}
+.fs-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 1.2fr 140px;
+  gap: 32px;
+  padding: 42px 0;
+  border-top: 1px solid var(--rule-d);
+  align-items: baseline;
+  transition: padding .3s;
+}
+.fs-row:last-child { border-bottom: 1px solid var(--rule-d); }
+.fs-row:hover { padding-left: 16px; }
+.fs-row .roman {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 42px;
+  color: var(--accent-2);
+  line-height: 1;
+}
+.fs-row .name {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(38px, 4.4vw, 64px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+.fs-row .name em { font-style: italic; color: var(--accent-2); }
+.fs-row .name .yr {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(245,240,230,0.5);
+  font-weight: 400;
+  margin-top: 10px;
+}
+.fs-row p {
+  font-family: var(--serif);
+  font-size: clamp(16px, 1.25vw, 19px);
+  line-height: 1.55;
+  color: rgba(245,240,230,0.78);
+}
+.fs-row .lk {
+  justify-self: end;
+  align-self: center;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 22px;
+  color: var(--bone);
+  display: inline-flex; align-items: center; gap: 14px;
+  border-bottom: 1px solid var(--rule-d);
+  padding-bottom: 8px;
+  transition: padding .25s, color .25s, border-color .25s;
+}
+.fs-row .lk:hover { padding-right: 14px; color: var(--accent-2); border-color: var(--accent-2); }
+
+/* ======= RETURN ======= */
+.return-cta {
+  background: var(--bone);
+  padding: 16vh var(--pad) 12vh;
+  text-align: center;
+}
+.return-cta p {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(24px, 2.4vw, 36px);
+  color: var(--ink-3);
+  max-width: 720px; margin: 0 auto 32px;
+  letter-spacing: -0.01em;
+}
+.return-cta a.return {
+  display: inline-flex; align-items: center; gap: 14px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 22px;
+  color: var(--ink);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--ink);
+  transition: padding .25s, color .25s, border-color .25s;
+}
+.return-cta a.return:hover {
+  padding-right: 14px;
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ======= FOOTER ======= */
+.footer {
+  background: var(--ink); color: var(--bone);
+  padding: 12vh var(--pad) 32px;
+}
+.footer-inner { max-width: var(--maxw); margin: 0 auto; }
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 60px;
+  padding-bottom: 64px;
+  border-bottom: 1px solid var(--rule-d2);
+}
+.footer-grid h4 {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(245,240,230,0.5);
+  margin-bottom: 24px;
+  font-weight: 400;
+}
+.footer-grid ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.footer-grid a {
+  font-family: var(--serif);
+  font-size: 18px;
+  letter-spacing: -0.005em;
+  color: rgba(245,240,230,0.85);
+  transition: color .2s, padding-left .25s;
+}
+.footer-grid a:hover { color: var(--accent-2); padding-left: 8px; }
+.footer-addr {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.7;
+  color: rgba(245,240,230,0.7);
+}
+.footer-addr b { font-style: normal; font-weight: 400; color: var(--bone); }
+
+.colophon {
+  max-width: var(--maxw); margin: 28px auto 0;
+  padding-top: 24px;
+  display: flex; justify-content: space-between;
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.32em; text-transform: uppercase;
+  color: rgba(245,240,230,0.4);
+}
+
+/* ======= RESPONSIVE ======= */
+@media (max-width: 1100px) {
+  .rail-nav { display: none; }
+  .page-hero-inner { grid-template-columns: 1fr; gap: 36px; }
+  .principal-inner { grid-template-columns: 1fr; gap: 36px; }
+  .principal-portrait { position: static; }
+  .timeline-top { grid-template-columns: 1fr; gap: 32px; }
+  .timeline-track { grid-template-columns: repeat(3, 1fr); gap: 1px; }
+  .decade { border-right: 1px solid var(--rule-d); }
+  .special-inner { grid-template-columns: 1fr; gap: 36px; }
+  .special-stats { grid-template-columns: 1fr 1fr; }
+  .leaders-head { grid-template-columns: 1fr; gap: 24px; }
+  .leaders-grid { grid-template-columns: 1fr 1fr; }
+  .leaders-tail { grid-template-columns: 1fr; }
+  .crest-inner { grid-template-columns: 1fr; }
+  .affil-list { grid-template-columns: 1fr 1fr; }
+  .fs-row { grid-template-columns: 60px 1fr; gap: 14px; }
+  .fs-row > * { grid-column: 2; }
+  .fs-row .roman { grid-column: 1; grid-row: 1; }
+  .fs-row .lk { justify-self: start; align-self: start; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+}
+@media (max-width: 720px) {
+  :root { --pad: 24px; }
+  .timeline-track { grid-template-columns: 1fr 1fr; }
+  .special-stats { grid-template-columns: 1fr; }
+  .leaders-grid { grid-template-columns: 1fr; }
+  .affil-list { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .page-hero h1 { font-size: 80px; }
+}
+</style>
+<link rel="stylesheet" href="a11y.css">
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<!-- ====== RAIL ====== -->
+<nav class="rail">
+  <a href="Middleton Grange.html" class="mark">Middleton <span class="amp">&amp;</span> Grange</a>
+  <div class="rail-nav">
+    <a href="about.html" class="is-current">About</a>
+    <a href="learning.html">Learning</a>
+    <a href="enrol.html">Enrol</a>
+    <a href="houses.html">Houses</a>
+    <a href="contact.html">Visit</a>
+  </div>
+  <a href="contact.html" class="rail-cta">Book a tour</a>
+</nav>
+
+<!-- ====== HERO ====== -->
+<section class="page-hero" id="main">
+  <div class="page-hero-inner">
+    <div data-fade>
+      <div class="lab">About — the school in brief</div>
+      <h1>About <em>us.</em></h1>
+    </div>
+    <p class="lede" data-fade>Middleton Grange is a <b>state-integrated Christian school</b> in Upper Riccarton, Ōtautahi Christchurch. We teach about <b>fourteen hundred</b> young people, from Year 1 to Year 13, on one campus, with one verse.</p>
+  </div>
+  <div class="crumb-rail">
+    <span>Home / About</span>
+    <span>Est. 1964 — Founded by The Christian Schools' Trust</span>
+    <span>Ōtautahi · NZ</span>
+  </div>
+</section>
+
+<!-- ====== PRINCIPAL ====== -->
+<section class="principal" id="principal">
+  <div class="principal-inner">
+    <div class="principal-portrait" data-fade>
+      <div class="pic"></div>
+      <div class="nameblock">
+        <div class="name">Mr Gregg <em>Le Roux</em></div>
+        <div class="role">Principal · since 2018</div>
+      </div>
+    </div>
+    <div class="principal-letter" data-fade>
+      <div class="section-lab">A letter, in full</div>
+      <p>Thank you for taking a moment to visit us. Choosing a school for your child is one of the most significant decisions you will ever make, and I do not take lightly that you are considering Middleton Grange.</p>
+      <p>We are a school known for its high quality education and, equally, as a <em>compassionate community</em> in which the God-given gifts and talents of students are noticed, nurtured and celebrated. Those three words — noticed, nurtured, celebrated — matter to us in that order.</p>
+      <p>From Year 1 to Year 13, on one campus, your child will be known by name. They will be challenged academically — our seniors consistently exceed the national NCEA averages — but more importantly they will be shaped, slowly, into the kind of person who notices the new kid, who finishes what they started, who carries themselves with quiet confidence and quiet humility both. That is character. That is what we are here to do.</p>
+      <p>If you would like to see the school in action, the best invitation I can offer is our Open Day in May, or a quiet weekday tour. Walk the campus. Sit in on a chapel. Eat something terrible from the canteen. You will get a far better sense of who we are in twenty minutes here than in a hundred pages of brochure.</p>
+      <p>I look forward, perhaps, to meeting you.</p>
+      <div class="signoff">— Gregg Le Roux<br><span style="font-style: normal; font-family: var(--mono); font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--ink-4);">Principal · Middleton Grange School</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== TIMELINE ====== -->
+<section class="timeline" id="history">
+  <div class="timeline-top">
+    <div data-fade>
+      <div class="section-lab">Our story — 1964 to today</div>
+      <h2>Sixty-two <em>years</em> of one school, on one campus.</h2>
+    </div>
+    <p data-fade>Middleton Grange opened on the 4th of February, 1964, on what had then been farmland in Upper Riccarton. We have not moved since. What follows is the short version.</p>
+  </div>
+  <div class="timeline-track">
+    <article class="decade" data-fade>
+      <span class="yrs">Decade I</span>
+      <div class="year">1964</div>
+      <h4>The school <em>begins.</em></h4>
+      <p>Founded by The Christian Schools' Trust on Bowen farmland, Upper Riccarton. Twenty-three students. A handful of converted classrooms.</p>
+    </article>
+    <article class="decade" data-fade>
+      <span class="yrs">Decade II</span>
+      <div class="year">1970</div>
+      <h4>The secondary years.</h4>
+      <p>The school grows beyond primary, becoming a full Year 1 – 13. The chapel and original gymnasium are built. The four-Houses system is established.</p>
+    </article>
+    <article class="decade" data-fade>
+      <span class="yrs">Decade III</span>
+      <div class="year">1980</div>
+      <h4>A community takes root.</h4>
+      <p>The roll passes 500. Performing arts begins in earnest. Sport codes broaden from rugby and netball to nearly everything.</p>
+    </article>
+    <article class="decade" data-fade>
+      <span class="yrs">Decade IV</span>
+      <div class="year">1996</div>
+      <h4>State integration.</h4>
+      <p>Middleton joins the New Zealand state-integrated system, preserving its special Christian character while accessing government funding. The Christian Schools' Trust remains proprietor.</p>
+    </article>
+    <article class="decade" data-fade>
+      <span class="yrs">Decade V</span>
+      <div class="year">2010</div>
+      <h4>The Quake.</h4>
+      <p>The school weathers the Canterbury earthquakes. Classes continue. Buildings are strengthened and renewed. International College grows.</p>
+    </article>
+    <article class="decade" data-fade>
+      <span class="yrs">Decade VI</span>
+      <div class="year">2020</div>
+      <h4>The Grange Theatre opens.</h4>
+      <p>Three-hundred-and-four seats. Built for our productions and for the wider Christchurch community to use. The Fridge Radio &amp; Te Ohu Kahika launch.</p>
+    </article>
+    <article class="decade" data-fade>
+      <span class="yrs">Today</span>
+      <div class="year">2026</div>
+      <h4>Sixty-two years on.</h4>
+      <p>Around fourteen hundred students. Four schools. One verse. The 60th-anniversary programme runs through Term 3 with a gala in September.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ====== SPECIAL CHARACTER ====== -->
+<section class="special" id="character">
+  <div class="special-inner">
+    <div class="section-head" data-fade>
+      <div class="section-lab">Special Character</div>
+      <h2>A Christian school, <em>state-integrated,</em> non-denominational, sixty-two years old.</h2>
+    </div>
+    <div data-fade>
+      <div class="body">
+        <p>As a Christian school, the Bible is the foundation for all we do. We believe that education is fundamentally about preparing young people to live lives that honour God and serve others.</p>
+        <p>Our Special Character is not an add-on; it is the soil. It is in how we choose subjects, how we run teams, how we write reports, how we welcome a new family through the gates. It shapes the Year 4 Bible lesson, the Year 12 NCEA history class, the way we coach the 1st XV, the way we run the school production.</p>
+        <p>Middleton is <em>interdenominational</em> by design. Our families come from Baptist, Anglican, Catholic, Presbyterian, Pentecostal, Reformed, Brethren and many other traditions. They are bound together by a shared belief: that Christ is at the centre, and that every child is made in the image of God and is worth the effort of being noticed, nurtured and celebrated.</p>
+      </div>
+      <dl class="special-stats">
+        <div><dt>Established</dt><dd>4 Feb 1964</dd></div>
+        <div><dt>State-integrated</dt><dd>Since 1996</dd></div>
+        <div><dt>Proprietor</dt><dd>The Christian Schools' Trust</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ====== ANNUAL THEME ====== -->
+<section class="annual">
+  <div class="annual-inner" data-fade>
+    <div class="lab">Annual theme · 2026</div>
+    <p class="verse">"Be <em>strong</em> and <em>courageous.</em>"</p>
+    <div class="ref">Joshua 1:9</div>
+    <p class="note">Our annual theme shapes chapels, retreats, House competitions, the senior production, and how staff frame the year. In 2026, we are asking our students — and ourselves — to <em>not be afraid</em>.</p>
+  </div>
+</section>
+
+<!-- ====== LEADERSHIP ====== -->
+<section class="leaders" id="leadership">
+  <div class="leaders-inner">
+    <div class="leaders-head">
+      <div data-fade>
+        <div class="section-lab">Senior Leadership · 2026</div>
+        <h2 style="font-family: var(--serif); font-weight: 300; font-size: clamp(44px, 6vw, 108px); line-height: 0.9; letter-spacing: -0.035em;">The people who <em style="color: var(--accent); font-style: italic; font-weight: 300;">lead</em> us.</h2>
+      </div>
+      <p data-fade>Our Senior Leadership Team carries day-to-day responsibility for the school, working alongside the Board of Proprietors and the Board of Trustees. They are all reachable by email — first initial dot surname at middleton dot school dot nz.</p>
+    </div>
+    <div class="leaders-grid">
+      <article class="leader" data-fade>
+        <div class="face" data-init="GL"></div>
+        <h3>Mr Gregg <em>Le Roux</em></h3>
+        <div class="role">Principal</div>
+      </article>
+      <article class="leader" data-fade>
+        <div class="face" data-init="CU"></div>
+        <h3>Mr Craig <em>Utting</em></h3>
+        <div class="role">Associate Principal</div>
+      </article>
+      <article class="leader" data-fade>
+        <div class="face" data-init="CB"></div>
+        <h3>Mrs Christine <em>Buckley</em></h3>
+        <div class="role">Deputy · Primary</div>
+      </article>
+      <article class="leader" data-fade>
+        <div class="face" data-init="LA"></div>
+        <h3>Mrs Louise <em>Arndt</em></h3>
+        <div class="role">Acting Deputy · Middle</div>
+      </article>
+      <article class="leader" data-fade>
+        <div class="face" data-init="SM"></div>
+        <h3>Mr Shane <em>McConnell</em></h3>
+        <div class="role">Deputy · Senior College</div>
+      </article>
+      <article class="leader" data-fade>
+        <div class="face" data-init="JA"></div>
+        <h3>Mrs Jenny <em>Addison</em></h3>
+        <div class="role">Deputy · Staffing &amp; Waiora</div>
+      </article>
+      <article class="leader" data-fade>
+        <div class="face" data-init="DM"></div>
+        <h3>Mr Dean <em>McKenzie</em></h3>
+        <div class="role">Deputy · School Management</div>
+      </article>
+      <article class="leader" data-fade>
+        <div class="face" data-init="CS"></div>
+        <h3>Mrs Colleen <em>Steyn</em></h3>
+        <div class="role">Director · International College</div>
+      </article>
+    </div>
+    <div class="leaders-tail">
+      <div>
+        <h5>Board of Proprietors</h5>
+        Stewards of the Special Character on behalf of the Christian Schools' Trust. <a href="#">Meet the Board →</a>
+      </div>
+      <div>
+        <h5>Board of Trustees</h5>
+        Elected parent and staff representatives responsible for school governance under the Education Act. <a href="#">Meet the BoT →</a>
+      </div>
+      <div>
+        <h5>Heads of Department</h5>
+        Each curriculum area — from English to PE to Performing Arts — is led by an experienced HoD. <a href="#">All staff &amp; HoDs →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== CREST / MOTTO ====== -->
+<section class="crest-section" id="crest">
+  <div class="crest-inner">
+    <svg class="crest-svg" viewBox="0 0 400 400" aria-hidden="true">
+      <!-- outer rotating ring -->
+      <g class="ring">
+        <circle cx="200" cy="200" r="190" fill="none" stroke="rgba(229,143,123,0.4)" stroke-width="0.6"/>
+        <circle cx="200" cy="200" r="186" fill="none" stroke="rgba(229,143,123,0.15)" stroke-width="0.4" stroke-dasharray="2 6"/>
+        <!-- motto along ring -->
+        <defs>
+          <path id="mottoArc" d="M 200,200 m -170,0 a 170,170 0 1,1 340,0 a 170,170 0 1,1 -340,0"/>
+        </defs>
+        <text font-family="JetBrains Mono" font-size="11" letter-spacing="6" fill="rgba(245,240,230,0.7)">
+          <textPath href="#mottoArc" startOffset="0%">
+            CHARACTER · EXCELLENCE · SERVICE · FOR THE GLORY OF GOD · CHARACTER · EXCELLENCE · SERVICE · FOR THE GLORY OF GOD · 
+          </textPath>
+        </text>
+      </g>
+      <!-- inner rotating accent -->
+      <g class="ring-inner">
+        <circle cx="200" cy="200" r="145" fill="none" stroke="rgba(245,240,230,0.18)" stroke-width="0.5"/>
+        <g stroke="rgba(245,240,230,0.25)" stroke-width="0.4">
+          <line x1="200" y1="55" x2="200" y2="65"/>
+          <line x1="200" y1="335" x2="200" y2="345"/>
+          <line x1="55" y1="200" x2="65" y2="200"/>
+          <line x1="335" y1="200" x2="345" y2="200"/>
+        </g>
+      </g>
+      <!-- shield (static) -->
+      <path d="M 200,80 L 290,108 V 200 C 290,256 250,300 200,318 C 150,300 110,256 110,200 V 108 Z"
+            fill="none" stroke="rgba(229,143,123,0.5)" stroke-width="1.4"/>
+      <path d="M 200,90 L 280,116 V 200 C 280,250 244,290 200,306 C 156,290 120,250 120,200 V 116 Z"
+            fill="#6E1B1B"/>
+      <!-- chevron -->
+      <path d="M 130,200 L 200,160 L 270,200" fill="none" stroke="rgba(245,240,230,0.85)" stroke-width="2"/>
+      <!-- M monogram -->
+      <text x="200" y="240" text-anchor="middle"
+            font-family="Cormorant Garamond" font-size="84" font-style="italic" font-weight="400"
+            fill="rgba(245,240,230,0.95)">M</text>
+      <!-- year -->
+      <text x="200" y="280" text-anchor="middle"
+            font-family="JetBrains Mono" font-size="10" letter-spacing="4"
+            fill="rgba(245,240,230,0.7)">EST · MCMLXIV</text>
+    </svg>
+
+    <div class="crest-details">
+      <div class="section-head" data-fade>
+        <div class="section-lab">Motto · Verse · Hymn · Crest</div>
+        <h2>The marks <em>we live by.</em></h2>
+      </div>
+      <dl data-fade>
+        <div class="crest-row">
+          <dt>Motto</dt>
+          <dd>Character, excellence, service — <em style="color:var(--accent-2)">for the glory of God</em>.</dd>
+        </div>
+        <div class="crest-row">
+          <dt>School verse</dt>
+          <dd>"In thy light shall we see light."<small>Psalm 36 · 9</small></dd>
+        </div>
+        <div class="crest-row">
+          <dt>School hymn</dt>
+          <dd><em style="color:var(--accent-2)">We Rest On Thee.</em> Sung to Sibelius's <em>Finlandia</em>.</dd>
+        </div>
+        <div class="crest-row">
+          <dt>Annual theme</dt>
+          <dd>"Be strong and courageous."<small>Joshua 1 · 9 — 2026</small></dd>
+        </div>
+        <div class="crest-row">
+          <dt>Founded</dt>
+          <dd>4 February 1964<small>By The Christian Schools' Trust</small></dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ====== AFFILIATIONS ====== -->
+<section class="affil">
+  <div class="affil-inner">
+    <div class="affil-head" data-fade>
+      <div class="section-lab">Affiliations &amp; sub-organisations</div>
+      <h2 style="font-family: var(--serif); font-weight: 300; font-size: clamp(44px, 6vw, 108px); line-height: 0.9; letter-spacing: -0.035em;">Schools <em style="color: var(--accent); font-style: italic; font-weight: 300;">within</em> the school.</h2>
+    </div>
+    <div class="affil-list">
+      <article class="affil-row">
+        <span class="lab">Theatre</span>
+        <span class="name">The Grange <em style="color:var(--accent);">Theatre</em></span>
+        <span class="place">304 seats · 27 Arthur Street</span>
+      </article>
+      <article class="affil-row">
+        <span class="lab">Radio</span>
+        <span class="name">The Fridge <em style="color:var(--accent);">Radio</em></span>
+        <span class="place">88.3 FM · Christchurch</span>
+      </article>
+      <article class="affil-row">
+        <span class="lab">Music</span>
+        <span class="name">Music <em style="color:var(--accent);">Academy</em></span>
+        <span class="place">Tuition · ensembles · hire</span>
+      </article>
+      <article class="affil-row">
+        <span class="lab">STEM</span>
+        <span class="name">Te Ohu <em style="color:var(--accent);">Kahika</em></span>
+        <span class="place">Lab days · workshops</span>
+      </article>
+      <article class="affil-row">
+        <span class="lab">Network</span>
+        <span class="name">Christian Schools <em style="color:var(--accent);">Trust</em></span>
+        <span class="place">Proprietor since 1964</span>
+      </article>
+      <article class="affil-row">
+        <span class="lab">Network</span>
+        <span class="name">Christian Schools <em style="color:var(--accent);">Aotearoa</em> NZ</span>
+        <span class="place">National association</span>
+      </article>
+      <article class="affil-row">
+        <span class="lab">Network</span>
+        <span class="name">Independent Schools <em style="color:var(--accent);">NZ</em></span>
+        <span class="place">National body</span>
+      </article>
+      <article class="affil-row">
+        <span class="lab">Review</span>
+        <span class="name">ERO <em style="color:var(--accent);">Review</em></span>
+        <span class="place">Full reviews · public record</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FOUR SCHOOLS ANCHORED ====== -->
+<section class="fs">
+  <div class="fs-inner">
+    <div class="fs-head" data-fade>
+      <div class="section-lab">Life at MGS · Four Schools, one community</div>
+      <h2>One school, <em>four ways in.</em></h2>
+    </div>
+    <div class="fs-list">
+
+      <article class="fs-row" id="primary">
+        <div class="roman">i.</div>
+        <div class="name">Primary <span class="yr">Years 1 – 6 · ~300 ākonga</span></div>
+        <p>Foundations are quiet, slow work. Reading taught like it matters because it does. The children play in puddles, learn each other's names, and discover what they are good at.</p>
+        <a href="#" class="lk">Walk through <span>↗</span></a>
+      </article>
+
+      <article class="fs-row" id="middle">
+        <div class="roman">ii.</div>
+        <div class="name">Middle <span class="yr">Years 7 – 10 · ~450 ākonga</span></div>
+        <p>The middle years are when questions get harder and answers more interesting. Real responsibility, real failure, real friendship — and a great deal of patience from the adults in the room.</p>
+        <a href="#" class="lk">Walk through <span>↗</span></a>
+      </article>
+
+      <article class="fs-row" id="senior">
+        <div class="roman">iii.</div>
+        <div class="name">Senior <em>College</em><span class="yr">Years 11 – 13 · ~550 ākonga</span></div>
+        <p>NCEA, leadership, service, university and trades. We aim to send our seniors out the gate at the end of Year 13 well-loved and well-prepared — and only one of those is something we'll put on a brochure.</p>
+        <a href="#" class="lk">Walk through <span>↗</span></a>
+      </article>
+
+      <article class="fs-row" id="international">
+        <div class="roman">iv.</div>
+        <div class="name">International<span class="yr">Years 1 – 13 · ~100 ākonga · 14 countries</span></div>
+        <p>For our students from overseas — homestay families, ESOL, pastoral care, university pathways, and a tutor who will text your parents in their own time zone if you are sick.</p>
+        <a href="#" class="lk">Walk through <span>↗</span></a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====== RETURN ====== -->
+<section class="return-cta">
+  <p data-fade>The best way to know us is to come and see — Open Day is Saturday 30 May, or a tour can be arranged any weekday.</p>
+  <a href="contact.html" class="return">Book a tour <span>→</span></a>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <h4>School</h4>
+        <div class="footer-addr">
+          <b>30 Acacia Avenue</b><br>
+          Upper Riccarton, Christchurch 8041<br>
+          Aotearoa New Zealand<br><br>
+          +64 (03) 348 9826<br>
+          office@middleton.school.nz
+        </div>
+      </div>
+      <div>
+        <h4>For families</h4>
+        <ul>
+          <li><a href="https://middleton.school.kiwi/">Parent Portal · KAMAR</a></li>
+          <li><a href="#">Newsletters</a></li>
+          <li><a href="#">Calendar &amp; term dates</a></li>
+          <li><a href="https://shop.tgcl.co.nz/shop/q2.shtml?session=false&shop=Middleton%20Grange%20School">KINDO shop</a></li>
+          <li><a href="#">School app</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>For students</h4>
+        <ul>
+          <li><a href="https://middletonschoolnz.sharepoint.com/teams/home">Student Portal · SharePoint</a></li>
+          <li><a href="https://aiscloud.nz/MDD00/#!landingPage">Library Dashboard</a></li>
+          <li><a href="#">NCEA</a></li>
+          <li><a href="https://middleton.careerwise.school/">Careers</a></li>
+          <li><a href="mailto:absences@middleton.school.nz">Absences</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Within the school</h4>
+        <ul>
+          <li><a href="https://thegrangetheatre.nz/">The Grange Theatre</a></li>
+          <li><a href="#">The Fridge Radio · 88.3 FM</a></li>
+          <li><a href="#">Music Academy</a></li>
+          <li><a href="#">Te Ohu Kahika</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="colophon">
+      <span>© 1964 – 2026 · Middleton Grange</span>
+      <span>In thy light shall we see light · Psalm 36 · 9</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Reveal on scroll */
+(function () {
+  const items = document.querySelectorAll('[data-fade]');
+  items.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 1.1s cubic-bezier(.2,.7,.2,1), transform 1.1s cubic-bezier(.2,.7,.2,1)';
+  });
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        io.unobserve(e.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+  items.forEach(el => io.observe(el));
+})();
+</script>
+
+</body>
+</html>

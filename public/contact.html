@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Visit &amp; Contact — Middleton Grange School</title>
+<meta name="description" content="Visit Middleton Grange School. 30 Acacia Avenue, Upper Riccarton, Christchurch. Address, phone, email, key staff, sub-organisations." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600;1,700&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet" />
+
+<style>
+:root{
+  --bone:#F5F0E6; --bone-2:#EDE6D6; --bone-3:#E1D8C2;
+  --ink:#0F0B07; --ink-2:#2B231B; --ink-3:#5A4F40; --ink-4:#9C9180;
+  --accent:#6E1B1B; --accent-2:#E58F7B;
+  --rule:rgba(15,11,7,0.10); --rule-2:rgba(15,11,7,0.22);
+  --rule-d:rgba(245,240,230,0.10); --rule-d2:rgba(245,240,230,0.22);
+  --serif:'Cormorant Garamond','EB Garamond','Times New Roman',serif;
+  --sans:'Inter Tight',-apple-system,system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --pad:56px; --maxw:1440px;
+}
+*{margin:0; padding:0; box-sizing:border-box;}
+html,body{background:var(--bone);}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans); color:var(--ink); line-height:1.55; font-size:16px;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; overflow-x:hidden;}
+a{color:inherit; text-decoration:none;}
+img,svg{display:block; max-width:100%;}
+
+/* Rail */
+.rail{position:fixed; top:0; left:0; right:0; z-index:80;
+  padding:18px var(--pad);
+  display:grid; grid-template-columns:1fr auto 1fr; gap:32px;
+  align-items:center;
+  background:rgba(61,13,13,0.92);
+  backdrop-filter:saturate(1.15) blur(18px);
+  -webkit-backdrop-filter:saturate(1.15) blur(18px);
+  border-bottom:1px solid rgba(245,240,230,0.10);}
+.rail .mark{font-family:var(--serif); font-style:italic; font-weight:400;
+  font-size:20px; letter-spacing:-0.02em; color:var(--bone);
+  display:inline-flex; align-items:baseline; gap:6px;}
+.rail .mark .amp{color:var(--accent-2); font-weight:300;}
+.rail-nav{display:flex; gap:4px; justify-self:center;}
+.rail-nav a{padding:8px 14px; font-size:13px; color:var(--bone); position:relative;}
+.rail-nav a.is-current{color:var(--accent-2);}
+.rail-nav a::after{content:''; position:absolute; bottom:4px; left:14px; right:14px;
+  height:1px; background:currentColor; transform:scaleX(0); transform-origin:left;
+  transition:transform .35s cubic-bezier(.2,.7,.2,1);}
+.rail-nav a:hover::after, .rail-nav a.is-current::after{transform:scaleX(1);}
+.rail-cta{display:inline-flex; align-items:center; gap:10px;
+  font-size:12px; letter-spacing:0.04em; color:var(--bone);
+  border:1px solid rgba(245,240,230,0.3); padding:9px 16px; border-radius:999px;
+  transition:background .3s, color .3s, border-color .3s;}
+.rail-cta:hover{background:var(--bone); color:var(--ink); border-color:var(--bone);}
+
+/* Hero */
+.page-hero{position:relative; min-height:86vh; display:grid; place-items:center;
+  background:var(--ink); color:var(--bone); overflow:hidden; padding:140px var(--pad) 60px;}
+.page-hero::before{content:''; position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse at 50% 80%, rgba(110,27,27,0.25), transparent 60%);}
+.page-hero::after{content:''; position:absolute; inset:0;
+  background-image:repeating-linear-gradient(0deg, rgba(245,240,230,0.02) 0 1px, transparent 1px 3px);}
+.page-hero-inner{position:relative; max-width:var(--maxw); width:100%;
+  display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:end; z-index:2;}
+.page-hero .lab{font-family:var(--mono); font-size:11px;
+  letter-spacing:0.32em; text-transform:uppercase; color:var(--accent-2);
+  margin-bottom:32px; display:flex; align-items:center; gap:14px;}
+.page-hero .lab::before{content:''; width:36px; height:1px; background:currentColor;}
+.page-hero h1{font-family:var(--serif); font-weight:300;
+  font-size:clamp(82px, 13vw, 240px); line-height:0.86; letter-spacing:-0.05em;}
+.page-hero h1 em{font-style:italic; color:var(--accent-2); font-weight:300;}
+.page-hero .lede{font-family:var(--serif); font-style:italic; font-weight:300;
+  font-size:clamp(20px, 1.7vw, 28px); line-height:1.45;
+  color:rgba(245,240,230,0.78); max-width:520px;}
+.page-hero .lede b{font-style:normal; font-weight:500; color:var(--bone);}
+.crumb-rail{position:absolute; bottom:30px; left:var(--pad); right:var(--pad);
+  display:flex; justify-content:space-between;
+  font-family:var(--mono); font-size:10.5px; letter-spacing:0.32em;
+  text-transform:uppercase; color:rgba(245,240,230,0.5);}
+
+/* Section bits */
+.section-lab{font-family:var(--mono); font-size:11px; letter-spacing:0.32em;
+  text-transform:uppercase; color:var(--ink-3); margin-bottom:28px;
+  display:flex; align-items:center; gap:14px;}
+.section-lab::before{content:''; width:36px; height:1px; background:currentColor;}
+.section-head h2{font-family:var(--serif); font-weight:300;
+  font-size:clamp(44px, 6vw, 108px); line-height:0.9; letter-spacing:-0.035em;}
+.section-head h2 em{font-style:italic; color:var(--accent); font-weight:300;}
+
+/* ===== ADDRESS + MAP ===== */
+.address{background:var(--bone); padding:18vh var(--pad);}
+.address-inner{max-width:var(--maxw); margin:0 auto;
+  display:grid; grid-template-columns:1.1fr 1fr;
+  gap:80px; align-items:stretch;}
+.addr-meta{display:flex; flex-direction:column; gap:24px;}
+.addr-meta h2 em{color:var(--accent);}
+.address-rows{display:flex; flex-direction:column;}
+.addr-row{display:grid; grid-template-columns:140px 1fr; gap:32px;
+  padding:24px 0; border-top:1px solid var(--rule);
+  align-items:baseline;}
+.addr-row:last-child{border-bottom:1px solid var(--rule);}
+.addr-row dt{font-family:var(--mono); font-size:10.5px;
+  letter-spacing:0.32em; text-transform:uppercase; color:var(--ink-3);}
+.addr-row dd{font-family:var(--serif); font-style:italic;
+  font-size:clamp(22px, 1.8vw, 30px); letter-spacing:-0.015em;
+  line-height:1.25; color:var(--ink);}
+.addr-row dd a{border-bottom:1px solid var(--rule-2);}
+.addr-row dd a:hover{color:var(--accent); border-color:var(--accent);}
+.addr-row dd small{display:block; font-family:var(--sans); font-style:normal;
+  font-weight:400; font-size:13px; color:var(--ink-3); margin-top:6px; letter-spacing:0;}
+
+.cta-row{margin-top:32px; display:flex; gap:14px; flex-wrap:wrap;}
+.cta-row a{display:inline-flex; align-items:center; gap:14px;
+  padding:18px 28px; border-radius:999px;
+  font-size:14px; letter-spacing:0.04em;
+  transition:transform .25s, background .25s, color .25s;}
+.cta-row .btn-fill{background:var(--ink); color:var(--bone);}
+.cta-row .btn-fill:hover{background:var(--accent);}
+.cta-row .btn-out{border:1px solid var(--rule-2); color:var(--ink);}
+.cta-row .btn-out:hover{background:var(--ink); color:var(--bone); border-color:var(--ink);}
+
+/* Map placeholder */
+.map{position:relative; aspect-ratio:4/5;
+  background:
+    repeating-linear-gradient(0deg, rgba(15,11,7,0.04) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(90deg, rgba(15,11,7,0.04) 0 1px, transparent 1px 24px),
+    linear-gradient(160deg, #D0BFA0 0%, #968266 100%);
+  border-radius:2px; overflow:hidden;}
+.map .pin{position:absolute; top:50%; left:50%;
+  width:18px; height:18px; transform:translate(-50%, -50%);
+  background:var(--accent); border-radius:50%;
+  box-shadow:0 0 0 8px rgba(110,27,27,0.18);
+  animation:pulsePin 2s ease-in-out infinite;}
+@keyframes pulsePin{
+  0%,100%{box-shadow:0 0 0 8px rgba(110,27,27,0.18);}
+  50%{box-shadow:0 0 0 16px rgba(110,27,27,0.05);}
+}
+.map::after{content:'30 Acacia Avenue · Upper Riccarton';
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%, 36px);
+  font-family:var(--serif); font-style:italic;
+  font-size:16px; color:var(--ink); white-space:nowrap;
+  background:var(--bone); padding:5px 12px; border-radius:3px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.1);}
+.map .label{position:absolute; left:18px; top:18px;
+  font-family:var(--mono); font-size:10px;
+  letter-spacing:0.32em; text-transform:uppercase;
+  color:rgba(15,11,7,0.55); background:rgba(245,240,230,0.5);
+  padding:4px 8px; border-radius:2px;}
+.map .lab-right{position:absolute; right:18px; top:18px;
+  font-family:var(--mono); font-size:10px;
+  letter-spacing:0.32em; text-transform:uppercase;
+  color:rgba(15,11,7,0.55);}
+.map .roads{position:absolute; inset:0;}
+.map .road{stroke:rgba(15,11,7,0.16); stroke-width:1.5; fill:none;}
+.map .road-2{stroke:rgba(15,11,7,0.10); stroke-width:0.8; fill:none;}
+
+/* ===== HOURS ===== */
+.hours{background:var(--ink); color:var(--bone); padding:18vh var(--pad);}
+.hours-inner{max-width:var(--maxw); margin:0 auto;}
+.hours-head{display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:end; margin-bottom:64px;}
+.hours-head .section-lab{color:rgba(245,240,230,0.55);}
+.hours-head h2{color:var(--bone);} .hours-head h2 em{color:var(--accent-2);}
+.hours-head p{font-family:var(--serif); font-size:clamp(18px, 1.5vw, 22px);
+  line-height:1.55; color:rgba(245,240,230,0.75); max-width:500px;}
+
+.hours-table{border-top:1px solid var(--rule-d2);}
+.hour-row{display:grid; grid-template-columns:1fr 1fr 1fr;
+  gap:40px; padding:24px 0;
+  border-bottom:1px solid var(--rule-d);
+  align-items:baseline;}
+.hour-row.head{padding:14px 0;
+  font-family:var(--mono); font-size:10.5px;
+  letter-spacing:0.32em; text-transform:uppercase;
+  color:rgba(245,240,230,0.5);}
+.hour-row .div{font-family:var(--serif); font-style:italic;
+  font-size:clamp(22px, 1.8vw, 28px); letter-spacing:-0.015em;}
+.hour-row .time{font-family:var(--serif); font-size:18px; color:rgba(245,240,230,0.85);}
+
+/* ===== DIRECTORY ===== */
+.directory{background:var(--bone); padding:22vh var(--pad);}
+.directory-inner{max-width:var(--maxw); margin:0 auto;}
+.directory-head{display:grid; grid-template-columns:1fr 1fr;
+  gap:80px; align-items:end; margin-bottom:64px;}
+.directory-head h2 em{color:var(--accent);}
+.directory-head p{font-family:var(--serif); font-size:clamp(18px, 1.5vw, 22px);
+  line-height:1.55; color:var(--ink-2); max-width:500px;}
+.directory-head p em{color:var(--accent); font-style:italic;}
+
+.dept{padding:48px 0; border-top:1px solid var(--rule-2);
+  display:grid; grid-template-columns:240px 1fr; gap:80px; align-items:start;}
+.dept:last-child{border-bottom:1px solid var(--rule-2);}
+.dept h3{font-family:var(--serif); font-weight:300;
+  font-size:clamp(28px, 2.6vw, 42px); line-height:0.95;
+  letter-spacing:-0.025em;}
+.dept h3 em{font-style:italic; color:var(--accent); font-weight:300;}
+.dept .desc{font-family:var(--mono); font-size:10.5px;
+  letter-spacing:0.3em; text-transform:uppercase; color:var(--ink-3);
+  margin-top:10px;}
+.dept-list{display:grid; grid-template-columns:1fr 1fr;
+  gap:18px 40px;}
+.dept-entry{display:flex; flex-direction:column; gap:4px;
+  padding:14px 0; border-top:1px solid var(--rule); transition:padding .2s;}
+.dept-entry:hover{padding-left:8px;}
+.dept-entry .who{font-family:var(--serif); font-style:italic;
+  font-size:20px; letter-spacing:-0.01em;}
+.dept-entry .who em{font-style:italic; color:var(--accent); font-weight:500;}
+.dept-entry .what{font-family:var(--mono); font-size:10px;
+  letter-spacing:0.3em; text-transform:uppercase; color:var(--ink-3);}
+.dept-entry a{font-family:var(--mono); font-size:13px;
+  color:var(--ink-2); letter-spacing:0.02em;
+  border-bottom:1px solid var(--rule); width:fit-content;
+  transition:color .2s, border-color .2s;}
+.dept-entry a:hover{color:var(--accent); border-color:var(--accent);}
+
+/* ===== SUB-ORGS ===== */
+.suborgs{background:var(--ink); color:var(--bone); padding:22vh var(--pad);
+  position:relative; overflow:hidden;}
+.suborgs::before{content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse at 100% 0%, rgba(229,143,123,0.10), transparent 60%);}
+.suborgs-inner{max-width:var(--maxw); margin:0 auto; position:relative;}
+.suborgs-head{margin-bottom:64px;}
+.suborgs-head .section-lab{color:rgba(245,240,230,0.55);}
+.suborgs-head h2{color:var(--bone);} .suborgs-head h2 em{color:var(--accent-2);}
+
+.suborg-list{display:grid; grid-template-columns:repeat(4, 1fr);
+  gap:0; border-top:1px solid var(--rule-d2);}
+.suborg{padding:36px 28px 32px 0;
+  border-right:1px solid var(--rule-d);
+  display:flex; flex-direction:column; gap:14px;
+  min-height:340px; transition:background .25s, padding .25s;}
+.suborg:last-child{border-right:0;}
+.suborg:hover{background:rgba(255,255,255,0.03); padding-left:16px;}
+.suborg .lab{font-family:var(--mono); font-size:10px;
+  letter-spacing:0.32em; text-transform:uppercase; color:var(--accent-2);}
+.suborg h3{font-family:var(--serif); font-weight:300;
+  font-size:clamp(30px, 2.6vw, 44px); line-height:0.95;
+  letter-spacing:-0.025em;}
+.suborg h3 em{font-style:italic; color:var(--accent-2); font-weight:300;}
+.suborg p{font-family:var(--serif); font-size:15.5px;
+  line-height:1.55; color:rgba(245,240,230,0.75);}
+.suborg dl{margin-top:auto; padding-top:14px;
+  border-top:1px solid var(--rule-d);
+  display:grid; grid-template-columns:1fr; gap:6px;
+  font-family:var(--mono); font-size:10.5px;
+  letter-spacing:0.18em; text-transform:uppercase;
+  color:rgba(245,240,230,0.7);}
+.suborg dl dt{color:rgba(245,240,230,0.45); font-size:10px;}
+.suborg dl dd a{color:var(--bone); border-bottom:1px solid var(--rule-d);}
+.suborg dl dd a:hover{color:var(--accent-2); border-color:var(--accent-2);}
+
+/* ===== TRAVEL ===== */
+.travel{background:var(--bone); padding:18vh var(--pad);}
+.travel-inner{max-width:var(--maxw); margin:0 auto;}
+.travel-head{margin-bottom:56px;}
+.travel-grid{display:grid; grid-template-columns:repeat(3, 1fr);
+  gap:0; border-top:1px solid var(--rule-2); border-bottom:1px solid var(--rule-2);}
+.travel-cell{padding:36px 32px 32px 0;
+  border-right:1px solid var(--rule);
+  display:flex; flex-direction:column; gap:12px;
+  min-height:240px;}
+.travel-cell:last-child{border-right:0;}
+.travel-cell .way{font-family:var(--mono); font-size:10.5px;
+  letter-spacing:0.32em; text-transform:uppercase; color:var(--accent);}
+.travel-cell h4{font-family:var(--serif); font-weight:400;
+  font-size:clamp(26px, 2.4vw, 38px); letter-spacing:-0.02em; line-height:1.05;}
+.travel-cell h4 em{font-style:italic; color:var(--accent); font-weight:300;}
+.travel-cell p{font-family:var(--serif); font-size:16px; line-height:1.55; color:var(--ink-2);}
+
+/* ===== FOOTER ===== */
+.footer{background:var(--ink); color:var(--bone); padding:12vh var(--pad) 32px;}
+.footer-inner{max-width:var(--maxw); margin:0 auto;}
+.footer-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr;
+  gap:60px; padding-bottom:64px; border-bottom:1px solid var(--rule-d2);}
+.footer-grid h4{font-family:var(--mono); font-size:10px;
+  letter-spacing:0.32em; text-transform:uppercase;
+  color:rgba(245,240,230,0.5); margin-bottom:24px; font-weight:400;}
+.footer-grid ul{list-style:none; display:flex; flex-direction:column; gap:12px;}
+.footer-grid a{font-family:var(--serif); font-size:18px;
+  letter-spacing:-0.005em; color:rgba(245,240,230,0.85);
+  transition:color .2s, padding-left .25s;}
+.footer-grid a:hover{color:var(--accent-2); padding-left:8px;}
+.footer-addr{font-family:var(--serif); font-style:italic;
+  font-size:17px; line-height:1.7; color:rgba(245,240,230,0.7);}
+.footer-addr b{font-style:normal; font-weight:400; color:var(--bone);}
+.colophon{max-width:var(--maxw); margin:28px auto 0; padding-top:24px;
+  display:flex; justify-content:space-between;
+  font-family:var(--mono); font-size:10px; letter-spacing:0.32em;
+  text-transform:uppercase; color:rgba(245,240,230,0.4);}
+
+@media (max-width:1100px){
+  .rail-nav{display:none;}
+  .page-hero-inner, .address-inner, .hours-head, .directory-head, .dept{grid-template-columns:1fr; gap:36px;}
+  .suborg-list, .travel-grid{grid-template-columns:1fr 1fr;}
+  .suborg, .travel-cell{border-right:1px solid var(--rule-d); border-bottom:1px solid var(--rule-d);}
+  .suborg:nth-child(2n), .travel-cell:nth-child(2n){border-right:0;}
+  .footer-grid{grid-template-columns:1fr 1fr; gap:36px;}
+  .dept-list{grid-template-columns:1fr;}
+  .hour-row{grid-template-columns:1fr 1fr;}
+}
+@media (max-width:720px){
+  :root{--pad:24px;}
+  .suborg-list, .travel-grid, .footer-grid{grid-template-columns:1fr;}
+  .page-hero h1{font-size:80px;}
+  .addr-row{grid-template-columns:1fr; gap:8px;}
+  .hour-row{grid-template-columns:1fr;}
+}
+</style>
+<link rel="stylesheet" href="/menu.css?v=15">
+<link rel="stylesheet" href="a11y.css">
+<script src="/menu.js?v=15" defer></script>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<nav class="rail">
+  <a href="index.html" class="mark">Middleton <span class="amp">&amp;</span> Grange</a>
+  <div class="rail-nav">
+    <a href="about.html">About</a>
+    <a href="learning.html">Learning</a>
+    <a href="enrol.html">Enrol</a>
+    <a href="houses.html">Houses</a>
+    <a href="contact.html" class="is-current">Visit</a>
+  </div>
+  <span class="rail-spacer" aria-hidden="true"></span>
+</nav>
+
+<section class="page-hero" id="main">
+  <div class="page-hero-inner">
+    <div data-fade>
+      <div class="lab">Visit · contact · directory</div>
+      <h1>Visit <em>us.</em></h1>
+    </div>
+    <p class="lede" data-fade>The full address book — every phone number, every email, every sub-organisation, the office hours, the way to find us, and the easiest way to book a tour. <b>If we've missed you, write to the office</b>.</p>
+  </div>
+  <div class="crumb-rail">
+    <span>Home / Visit</span>
+    <span>43°32′S · 172°37′E</span>
+    <span>office@middleton.school.nz</span>
+  </div>
+</section>
+
+<!-- ===== ADDRESS ===== -->
+<section class="address" id="tour">
+  <div class="address-inner">
+    <div class="addr-meta">
+      <div class="section-head" data-fade>
+        <div class="section-lab">The school · 30 Acacia Avenue</div>
+        <h2>Come <em>see us.</em></h2>
+      </div>
+      <dl class="address-rows" data-fade>
+        <div class="addr-row"><dt>Address</dt><dd>30 Acacia Avenue<br>Upper Riccarton, Christchurch 8041<br><small>Aotearoa New Zealand</small></dd></div>
+        <div class="addr-row"><dt>Main phone</dt><dd><a href="tel:+6433489826">+64 (03) 348 9826</a><br><small>Office · Mon – Fri</small></dd></div>
+        <div class="addr-row"><dt>Primary phone</dt><dd><a href="tel:+6433414053">+64 (03) 341 4053</a></dd></div>
+        <div class="addr-row"><dt>Office email</dt><dd><a href="mailto:office@middleton.school.nz">office@middleton.school.nz</a></dd></div>
+        <div class="addr-row"><dt>Absences</dt><dd><a href="mailto:absences@middleton.school.nz">absences@middleton.school.nz</a><br><small>Or via the school app / KAMAR portal</small></dd></div>
+      </dl>
+      <div class="cta-row" data-fade>
+        <a href="mailto:enrolments@middleton.school.nz?subject=Tour%20enquiry" class="btn-fill">Book a private tour →</a>
+        <a href="enrol.html" class="btn-out">Enrolment process →</a>
+      </div>
+    </div>
+
+    <div data-fade>
+      <div class="map">
+        <span class="label">Christchurch</span>
+        <span class="lab-right">43°32′S · 172°37′E</span>
+        <svg class="roads" viewBox="0 0 400 500" preserveAspectRatio="none">
+          <!-- horizontal streets -->
+          <path class="road" d="M 0 110 L 400 110"/>
+          <path class="road" d="M 0 230 L 400 230"/>
+          <path class="road" d="M 0 360 L 400 360"/>
+          <!-- vertical streets -->
+          <path class="road" d="M 130 0 L 130 500"/>
+          <path class="road" d="M 280 0 L 280 500"/>
+          <!-- minor lines -->
+          <path class="road-2" d="M 0 170 L 400 170"/>
+          <path class="road-2" d="M 0 290 L 400 290"/>
+          <path class="road-2" d="M 70 0 L 70 500"/>
+          <path class="road-2" d="M 200 0 L 200 500"/>
+          <path class="road-2" d="M 340 0 L 340 500"/>
+          <!-- park -->
+          <rect x="280" y="110" width="120" height="120" fill="rgba(31,63,42,0.10)"/>
+          <!-- highlight Acacia Ave near pin -->
+          <path d="M 130 280 L 280 280" stroke="rgba(110,27,27,0.4)" stroke-width="2.5" fill="none"/>
+          <text x="178" y="272" font-family="JetBrains Mono" font-size="10" letter-spacing="2" fill="rgba(110,27,27,0.55)">ACACIA AVE</text>
+        </svg>
+        <span class="pin"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOURS ===== -->
+<section class="hours">
+  <div class="hours-inner">
+    <div class="hours-head">
+      <div data-fade>
+        <div class="section-lab">School hours · 2026</div>
+        <h2>The <em>day</em>, by year level.</h2>
+      </div>
+      <p data-fade>School begins at 8:45am every day. Wednesdays finish a little earlier — 2:35pm — to give staff time for professional learning. Office hours are 8:15am – 4:30pm during term.</p>
+    </div>
+    <div class="hours-table">
+      <div class="hour-row head"><span>Division</span><span>Mon · Tue · Thu · Fri</span><span>Wednesday</span></div>
+      <div class="hour-row"><span class="div">Years 1 – 6 · Primary</span><span class="time">8:45am — 3:00pm</span><span class="time">8:45am — 2:35pm</span></div>
+      <div class="hour-row"><span class="div">Years 7 – 10 · Middle</span><span class="time">8:45am — 3:00pm</span><span class="time">8:45am — 2:35pm</span></div>
+      <div class="hour-row"><span class="div">Years 11 – 13 · Senior</span><span class="time">8:45am — 3:00pm</span><span class="time">8:45am — 2:35pm</span></div>
+      <div class="hour-row"><span class="div">Office</span><span class="time">8:15am — 4:30pm</span><span class="time">8:15am — 4:30pm</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DIRECTORY ===== -->
+<section class="directory">
+  <div class="directory-inner">
+    <div class="directory-head" data-fade>
+      <div class="section-head">
+        <div class="section-lab">Staff directory · by area</div>
+        <h2 style="font-family:var(--serif); font-weight:300; font-size:clamp(44px, 6vw, 108px); line-height:0.9; letter-spacing:-0.035em;">Who to <em style="color:var(--accent); font-style:italic; font-weight:300;">write to.</em></h2>
+      </div>
+      <p>Staff emails follow the format <em>initial.surname@middleton.school.nz</em>. Generic addresses are listed below for each area. Hours and personal mobile numbers are not published — please use the office for after-hours.</p>
+    </div>
+
+    <article class="dept">
+      <div data-fade>
+        <h3>Office <em>&amp; admin</em></h3>
+        <div class="desc">Reception · accounts · enrolment</div>
+      </div>
+      <div class="dept-list" data-fade>
+        <div class="dept-entry"><span class="who">Office <em>Reception</em></span><span class="what">General</span><a href="mailto:office@middleton.school.nz">office@middleton.school.nz</a></div>
+        <div class="dept-entry"><span class="who">Enrolments <em>team</em></span><span class="what">Domestic enrolment</span><a href="mailto:enrolments@middleton.school.nz">enrolments@middleton.school.nz</a></div>
+        <div class="dept-entry"><span class="who">Absences <em>line</em></span><span class="what">Daily attendance</span><a href="mailto:absences@middleton.school.nz">absences@middleton.school.nz</a></div>
+        <div class="dept-entry"><span class="who">Accounts <em>&amp; fees</em></span><span class="what">Billing</span><a href="mailto:accounts@middleton.school.nz">accounts@middleton.school.nz</a></div>
+      </div>
+    </article>
+
+    <article class="dept">
+      <div data-fade>
+        <h3>Senior <em>Leadership</em></h3>
+        <div class="desc">Principal · deputies · directors</div>
+      </div>
+      <div class="dept-list" data-fade>
+        <div class="dept-entry"><span class="who">Mr Gregg <em>Le Roux</em></span><span class="what">Principal</span><a href="mailto:g.leroux@middleton.school.nz">g.leroux@middleton.school.nz</a></div>
+        <div class="dept-entry"><span class="who">Mr Craig <em>Utting</em></span><span class="what">Associate Principal</span><a href="mailto:c.utting@middleton.school.nz">c.utting@middleton.school.nz</a></div>
+        <div class="dept-entry"><span class="who">Mrs Christine <em>Buckley</em></span><span class="what">Deputy · Primary</span><a href="mailto:c.buckley@middleton.school.nz">c.buckley@middleton.school.nz</a></div>
+        <div class="dept-entry"><span class="who">Mrs Louise <em>Arndt</em></span><span class="what">Acting Deputy · Middle</span><a href="mailto:l.arndt@middleton.school.nz">l.arndt@middleton.school.nz</a></div>
+        <div class="dept-entry"><span class="who">Mr Shane <em>McConnell</em></span><span class="what">Deputy · Senior</span><a href="mailto:s.mcconnell@middleton.school.nz">s.mcconnell@middleton.school.nz</a></div>
+        <div class="dept-entry"><span class="who">Mrs Jenny <em>Addison</em></span><span class="what">Deputy · Staffing &amp; Waiora</span><a href="mailto:j.addison@middleton.school.nz">j.addison@middleton.school.nz</a></div>
+        <div class="dept-entry"><span class="who">Mr Dean <em>McKenzie</em></span><span class="what">Deputy · Management</span><a href="mailto:d.mckenzie@middleton.school.nz">d.mckenzie@middleton.school.nz</a></div>
+        <div class="dept-entry"><span class="who">Mrs Colleen <em>Steyn</em></span><span class="what">Director · International</span><a href="mailto:c.steyn@middleton.school.nz">c.steyn@middleton.school.nz</a></div>
+      </div>
+    </article>
+
+    <article class="dept">
+      <div data-fade>
+        <h3>International <em>College</em></h3>
+        <div class="desc">For international students &amp; families</div>
+      </div>
+      <div class="dept-list" data-fade>
+        <div class="dept-entry"><span class="who">International <em>office</em></span><span class="what">Enquiries · enrolment</span><a href="mailto:inted@middleton.school.nz">inted@middleton.school.nz</a></div>
+        <div class="dept-entry"><span class="who">International <em>phone</em></span><span class="what">Direct line</span><a href="tel:+6433414054">+64 3 341 4054</a></div>
+        <div class="dept-entry"><span class="who">Urgent <em>line</em></span><span class="what">Term time</span><a href="tel:+64218068406">+64 21 806 846</a></div>
+        <div class="dept-entry"><span class="who">After-hours <em>emergency</em></span><span class="what">24 hrs</span><a href="tel:+642108839594">+64 21 088 39594</a></div>
+        <div class="dept-entry"><span class="who">Absence <em>text</em></span><span class="what">International only</span><a href="tel:+64212937436">021 293 7436</a></div>
+        <div class="dept-entry"><span class="who">G. <em>Anderson</em></span><span class="what">ESOL Coordinator</span><a href="mailto:g.anderson@middleton.school.nz">g.anderson@middleton.school.nz</a></div>
+      </div>
+    </article>
+
+    <article class="dept">
+      <div data-fade>
+        <h3>Sport &amp; <em>arts</em></h3>
+        <div class="desc">Codes · academies · production</div>
+      </div>
+      <div class="dept-list" data-fade>
+        <div class="dept-entry"><span class="who">Sports <em>office</em></span><span class="what">All codes</span><a href="mailto:sport@middleton.school.nz">sport@middleton.school.nz</a></div>
+        <div class="dept-entry"><span class="who">Performing Arts <em>centre</em></span><span class="what">Music · drama · dance</span><a href="mailto:PAC@middleton.school.nz">PAC@middleton.school.nz</a></div>
+        <div class="dept-entry"><span class="who">M. <em>McCormack</em></span><span class="what">Drama &amp; Production</span><a href="mailto:m.mccormack@middleton.school.nz">m.mccormack@middleton.school.nz</a></div>
+        <div class="dept-entry"><span class="who">P. <em>Moon</em></span><span class="what">Kapa Haka</span><a href="mailto:p.moon@middleton.school.nz">p.moon@middleton.school.nz</a></div>
+      </div>
+    </article>
+
+    <article class="dept">
+      <div data-fade>
+        <h3>Pathways <em>&amp; care</em></h3>
+        <div class="desc">Careers · Kahika · pastoral</div>
+      </div>
+      <div class="dept-list" data-fade>
+        <div class="dept-entry"><span class="who">N. <em>Bailey</em></span><span class="what">Careers</span><a href="mailto:n.bailey@middleton.school.nz">n.bailey@middleton.school.nz</a></div>
+        <div class="dept-entry"><span class="who">Careers <em>&amp; Gateway</em></span><span class="what">Workplace pathways</span><a href="mailto:careers.gateway@middleton.school.nz">careers.gateway@middleton.school.nz</a></div>
+        <div class="dept-entry"><span class="who">K. <em>Malcolm</em></span><span class="what">Te Ohu Kahika</span><a href="mailto:k.malcolm@middleton.school.nz">k.malcolm@middleton.school.nz</a></div>
+        <div class="dept-entry"><span class="who">Chaplain <em>(school)</em></span><span class="what">Pastoral care</span><a href="mailto:chaplain@middleton.school.nz">chaplain@middleton.school.nz</a></div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ===== SUB-ORGS ===== -->
+<section class="suborgs">
+  <div class="suborgs-inner">
+    <div class="suborgs-head section-head" data-fade>
+      <div class="section-lab">Sub-organisations</div>
+      <h2 style="font-family:var(--serif); font-weight:300; font-size:clamp(44px, 6vw, 108px); line-height:0.9; letter-spacing:-0.035em;">Within the <em style="color:var(--accent-2); font-style:italic; font-weight:300;">school.</em></h2>
+    </div>
+    <div class="suborg-list">
+
+      <article class="suborg" data-fade>
+        <span class="lab">№ 01 · Theatre</span>
+        <h3>The Grange <em>Theatre.</em></h3>
+        <p>304-seat professional theatre, built for our productions and hired by the wider Christchurch community for concerts, ballet, comedy and more.</p>
+        <dl>
+          <dt>Address</dt><dd>27 Arthur Street</dd>
+          <dt>Web</dt><dd><a href="https://thegrangetheatre.nz/">thegrangetheatre.nz</a></dd>
+          <dt>Hire</dt><dd>Mrs Rhian Horn</dd>
+        </dl>
+      </article>
+
+      <article class="suborg" data-fade>
+        <span class="lab">№ 02 · Radio</span>
+        <h3>The Fridge <em>Radio.</em></h3>
+        <p>The student-run FM radio station. Live shows, music, news and interviews. Christchurch's only school FM frequency.</p>
+        <dl>
+          <dt>FM</dt><dd>88.3 FM · Ōtautahi</dd>
+          <dt>Phone</dt><dd>0800 THE FRIDGE</dd>
+          <dt>Email</dt><dd><a href="mailto:thefridge@middleton.school.nz">thefridge@…</a></dd>
+        </dl>
+      </article>
+
+      <article class="suborg" data-fade>
+        <span class="lab">№ 03 · Music</span>
+        <h3>Middleton Music <em>Academy.</em></h3>
+        <p>Individual tuition, ensembles, instrument hire and the annual concert season. Open to all year levels — beginners welcome.</p>
+        <dl>
+          <dt>Email</dt><dd><a href="mailto:PAC@middleton.school.nz">PAC@…</a></dd>
+          <dt>Format</dt><dd>Termly enrolment</dd>
+          <dt>Site</dt><dd><a href="learning.html#arts">learning.html#arts</a></dd>
+        </dl>
+      </article>
+
+      <article class="suborg" data-fade>
+        <span class="lab">№ 04 · STEM</span>
+        <h3>Te Ohu <em>Kahika.</em></h3>
+        <p>Our STEM and innovation centre. Saturday lab days for Y9–10, workshops in robotics &amp; biotech, sponsorship-funded research.</p>
+        <dl>
+          <dt>Lead</dt><dd>K. Malcolm</dd>
+          <dt>Format</dt><dd>6 Saturdays / year</dd>
+          <dt>Email</dt><dd><a href="mailto:k.malcolm@middleton.school.nz">k.malcolm@…</a></dd>
+        </dl>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== TRAVEL ===== -->
+<section class="travel">
+  <div class="travel-inner">
+    <div class="travel-head section-head" data-fade>
+      <div class="section-lab">Getting here</div>
+      <h2 style="font-family:var(--serif); font-weight:300; font-size:clamp(44px, 6vw, 108px); line-height:0.9; letter-spacing:-0.035em;">A short way <em style="color:var(--accent); font-style:italic; font-weight:300;">in.</em></h2>
+    </div>
+    <div class="travel-grid">
+      <article class="travel-cell" data-fade>
+        <span class="way">By car</span>
+        <h4>Off <em>Yaldhurst Rd.</em></h4>
+        <p>Visitor parking via the Acacia Avenue gate. Drop-off circle by reception. Five minutes from Westfield Riccarton, fifteen from the central city.</p>
+      </article>
+      <article class="travel-cell" data-fade>
+        <span class="way">By bus</span>
+        <h4><em>Metro</em> 60 &amp; 80.</h4>
+        <p>Routes 60 and 80 stop on Yaldhurst Road. School-run buses pick up around greater Christchurch each morning and evening.</p>
+      </article>
+      <article class="travel-cell" data-fade>
+        <span class="way">By bike</span>
+        <h4>Covered <em>racks.</em></h4>
+        <p>Secure bike racks at the main entrance and at each school. The Hagley Park cycle network runs to within five minutes of campus.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <h4>School</h4>
+        <div class="footer-addr">
+          <b>30 Acacia Avenue</b><br>
+          Upper Riccarton, Christchurch 8041<br>
+          Aotearoa New Zealand<br><br>
+          +64 (03) 348 9826<br>
+          office@middleton.school.nz
+        </div>
+      </div>
+      <div>
+        <h4>For families</h4>
+        <ul>
+          <li><a href="https://middleton.school.kiwi/">Parent Portal · KAMAR</a></li>
+          <li><a href="#">Newsletters</a></li>
+          <li><a href="#">Calendar &amp; term dates</a></li>
+          <li><a href="https://shop.tgcl.co.nz/shop/q2.shtml?session=false&shop=Middleton%20Grange%20School">KINDO shop</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>For students</h4>
+        <ul>
+          <li><a href="https://middletonschoolnz.sharepoint.com/teams/home">Student Portal</a></li>
+          <li><a href="https://aiscloud.nz/MDD00/#!landingPage">Library Dashboard</a></li>
+          <li><a href="learning.html">NCEA &amp; subjects</a></li>
+          <li><a href="https://middleton.careerwise.school/">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Within the school</h4>
+        <ul>
+          <li><a href="https://thegrangetheatre.nz/">The Grange Theatre</a></li>
+          <li><a href="#">The Fridge Radio · 88.3 FM</a></li>
+          <li><a href="learning.html#arts">Music Academy</a></li>
+          <li><a href="learning.html#kahika">Te Ohu Kahika</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="colophon">
+      <span>© 1964 – 2026 · Middleton Grange</span>
+      <span>In thy light shall we see light · Psalm 36 · 9</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const items = document.querySelectorAll('[data-fade]');
+  items.forEach(el => {
+    el.style.opacity='0'; el.style.transform='translateY(24px)';
+    el.style.transition='opacity 1.1s cubic-bezier(.2,.7,.2,1), transform 1.1s cubic-bezier(.2,.7,.2,1)';
+  });
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; io.unobserve(e.target); }
+  }), { rootMargin:'0px 0px -8% 0px', threshold:0.05 });
+  items.forEach(el => io.observe(el));
+})();
+</script>
+</body>
+</html>
